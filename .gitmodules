@@ -1,0 +1,3 @@
+[submodule "dagger-relic"]
+	path = dagger-relic
+	url = https://github.com/gavrilovmiroslav/dagger-relic

@@ -1,0 +1,265 @@
+diff --git a/.vscode/settings.json b/.vscode/settings.json
+index 94c5d22..f7c44e6 100644
+--- a/.vscode/settings.json
++++ b/.vscode/settings.json
+@@ -18,5 +18,7 @@
+         "string_view": "cpp",
+         "vector": "cpp"
+     },
+-    "mesonbuild.configureOnOpen": false
++    "mesonbuild.configureOnOpen": false,
++    "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild",
++    "C_Cpp.default.compileCommands": "/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/compile_commands.json"
+ }
+\ No newline at end of file
+diff --git a/include/Access.h b/include/Access.h
+index 7e81d49..cb5fb42 100644
+--- a/include/Access.h
++++ b/include/Access.h
+@@ -151,6 +151,8 @@ struct SignalProcessor : public AccessTrait
+ 	{
+ 		core::Engine::get_instance().dispatcher.sink<T>().template connect<&SignalProcessor<T>::process_signal>(this);
+ 	}
++
++	virtual ~SignalProcessor() = default;
+ };
+ 
+ struct [[nodiscard]] EntitySpawnBuilder
+diff --git a/include/Lifecycle.h b/include/Lifecycle.h
+index 4d37fa6..cfdfc00 100644
+--- a/include/Lifecycle.h
++++ b/include/Lifecycle.h
+@@ -4,6 +4,8 @@ namespace ecs
+ {
+ 	struct LifecycleTrait
+ 	{
++		virtual ~LifecycleTrait() = default;
++
+ 		virtual Bool on_start() { return true; };
+ 		virtual void on_tick() {};
+ 		virtual void on_end() {};
+diff --git a/include/Loaders.h b/include/Loaders.h
+index de1826d..0332ce9 100644
+--- a/include/Loaders.h
++++ b/include/Loaders.h
+@@ -13,7 +13,7 @@ class TextureLoader
+ 	, public SignalProcessor<core::WindowShutdownSignal>
+ 	, public SignalEmitter<core::AssetUnloadingSignal<Texture>>
+ {
+-	memory::RawPtr<Texture> load_texture(String);
++	memory::RawPtr<Texture> load_texture(const String&);
+ 	String get_default_asset_name() const override;
+ 	void load_assets() override;
+ 	ecs::Entity load_asset(String texture_name, String texture_path) override;
+diff --git a/src/Animations.cpp b/src/Animations.cpp
+index c30e69b..4f09c05 100644
+--- a/src/Animations.cpp
++++ b/src/Animations.cpp
+@@ -5,9 +5,11 @@
+ 
+ void SpriteAnimation::change_to(String animation_name)
+ {
+-	const auto current = Spritesheet::get_by_name(animation_name);
+-	if (this->spritesheet == current) return;
+-
++	const auto current = Spritesheet::get_by_name(std::move(animation_name));
++	if (this->spritesheet == current) {
++		return;
++	}
++	
+ 	spritesheet = current;
+ 	current_frame = 0;
+ }
+diff --git a/src/Config.cpp b/src/Config.cpp
+index e8c0095..632173e 100644
+--- a/src/Config.cpp
++++ b/src/Config.cpp
+@@ -13,7 +13,7 @@ Config read_ini_file(RawString name)
+ Config load_config_from_ini_file(RawString fileName)
+ {
+ 	Config get_config{ read_ini_file(fileName) };
+-	for (auto it : get_config)
++	for (const auto& it : get_config)
+ 	{
+ 		auto const& category = it.first;
+ 		auto const& collection = it.second;
+diff --git a/src/EventBus.cpp b/src/EventBus.cpp
+index 35753a2..07458ee 100644
+--- a/src/EventBus.cpp
++++ b/src/EventBus.cpp
+@@ -69,8 +69,9 @@ void EventBusModule::on_tick()
+ 
+ 		SignalEmitter<BusEventSignal>::emit(signal);
+ 
+-		if (quit)
++		if (quit) {
+ 			Engine::get_instance().quit();
++		}
+ 	}
+ 
+ 	auto& mouse_state = MutAccessUnique<MouseState>::access_unique();
+diff --git a/src/Loaders.cpp b/src/Loaders.cpp
+index db41123..aa4bf75 100644
+--- a/src/Loaders.cpp
++++ b/src/Loaders.cpp
+@@ -23,7 +23,7 @@ TextureLoader::TextureLoader()
+ {
+ }
+ 
+-memory::RawPtr<Texture> TextureLoader::load_texture(String path)
++memory::RawPtr<Texture> TextureLoader::load_texture(const String& path)
+ {
+ 	auto& state = MutAccessUnique<core::WindowingState>::access_unique();
+ 	auto* texture = new Texture();
+@@ -101,7 +101,7 @@ void TextureLoader::load_assets()
+ 		name_paths.insert({ name, path });
+ 	}
+ 
+-	for (auto loaded : loaded_entity_mapping)
++	for (const auto& loaded : loaded_entity_mapping)
+ 	{
+ 		if (std::find(entries.begin(), entries.end(), loaded.first) == entries.end())
+ 		{
+@@ -112,7 +112,7 @@ void TextureLoader::load_assets()
+ 		to_remove.push_back(loaded.first);
+ 	}
+ 
+-	for (auto del : to_remove)
++	for (const auto& del : to_remove)
+ 	{
+ 		loaded_entity_mapping.erase(del);
+ 	}
+@@ -208,7 +208,7 @@ void read_line(std::ifstream& input)
+ 	std::getline(input, line);
+ }
+ 
+-std::tuple<String, String> read_tuple(std::string line)
++std::tuple<String, String> read_tuple(const std::string& line)
+ {
+ 	auto split = line.find(":");
+ 	auto first = trim_copy(line.substr(0, split));
+@@ -217,7 +217,7 @@ std::tuple<String, String> read_tuple(std::string line)
+ 	return { first, second };
+ }
+ 
+-std::optional<String> read_pair(std::ifstream& input, std::string key)
++std::optional<String> read_pair(std::ifstream& input, const std::string& key)
+ {
+ 	String line;
+ 
+@@ -234,35 +234,35 @@ std::optional<String> read_pair(std::ifstream& input, std::string key)
+ 	}
+ }
+ 
+-int read_int(std::string str)
++int read_int(const std::string& str)
+ {
+ 	int a = 0;
+ 	sscanf(str.c_str(), "%d", &a);
+ 	return a;
+ }
+ 
+-std::array<int, 4> read_4ints(std::string str)
++std::array<int, 4> read_4ints(const std::string& str)
+ {
+ 	int a = 0, b = 0, c = 0, d = 0;
+ 	sscanf(str.c_str(), "%d, %d, %d, %d", &a, &b, &c, &d);
+ 	return std::array<int, 4>{ a, b, c, d };
+ }
+ 
+-std::array<int, 2> read_2ints(std::string str)
++std::array<int, 2> read_2ints(const std::string& str)
+ {
+ 	int a = 0, b = 0;
+ 	sscanf(str.c_str(), "%d, %d", &a, &b);
+ 	return std::array<int, 2>{ a, b };
+ }
+ 
+-std::array<float, 2> read_2floats(std::string str)
++std::array<float, 2> read_2floats(const std::string& str)
+ {
+ 	float a = 0.0f, b = 0.0f;
+ 	sscanf(str.c_str(), "%f, %f", &a, &b);
+ 	return std::array<float, 2>{ a, b };
+ }
+ 
+-std::array<float, 4> read_4floats(std::string str)
++std::array<float, 4> read_4floats(const std::string& str)
+ {
+ 	float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+ 	sscanf(str.c_str(), "%f, %f, %f, %f", &a, &b, &c, &d);
+@@ -286,7 +286,7 @@ void SpritesheetLoader::load_assets()
+ 	}
+ 	entry.close();
+ 
+-	for (auto loaded : loaded_entity_mapping)
++	for (const auto& loaded : loaded_entity_mapping)
+ 	{
+ 		if (std::find(entries.begin(), entries.end(), loaded.first) == entries.end())
+ 		{
+@@ -297,7 +297,7 @@ void SpritesheetLoader::load_assets()
+ 		to_remove.push_back(loaded.first);
+ 	}
+ 
+-	for (auto del : to_remove)
++	for (const auto& del : to_remove)
+ 	{
+ 		loaded_entity_mapping.erase(del);
+ 	}
+diff --git a/src/Main.cpp b/src/Main.cpp
+index 32bb52b..c7ac2b2 100644
+--- a/src/Main.cpp
++++ b/src/Main.cpp
+@@ -71,10 +71,10 @@ struct PhysicsSystem
+ 	}
+ };
+ 
+-#define SCREEN_WIDTH 800
+-#define SCREEN_HEIGHT 600
+-#define BALL_RADIUS 16
+-#define SPEED_MOD 200.0f
++constexpr int SCREEN_WIDTH = 800;
++constexpr int SCREEN_HEIGHT = 600;
++constexpr int BALL_RADIUS  = 16;
++constexpr float SPEED_MOD = 200.0f;
+ 
+ struct BallMovementSystem
+ 	: public ecs::System
+diff --git a/src/SpriteRendering.cpp b/src/SpriteRendering.cpp
+index 271981e..0c15e9a 100644
+--- a/src/SpriteRendering.cpp
++++ b/src/SpriteRendering.cpp
+@@ -9,7 +9,7 @@ using namespace core;
+ 
+ ecs::Entity Spritesheet::get_by_name(String name)
+ {
+-	return AccessSystem<AssetModule>{}.access_system()->get_asset<Spritesheet>(name);
++	return AccessSystem<AssetModule>{}.access_system()->get_asset<Spritesheet>(std::move(name));
+ }
+ 
+ void SpriteRenderingModule::process_signal(RenderSignal& signal)
+@@ -28,10 +28,12 @@ void SpriteRenderingModule::process_signal(RenderSignal& signal)
+ 
+ 	for (const auto&& [ entity, sprite ] : AccessGroupStorage<Sprite>::access_storage().each())
+ 	{
+-		if (sprite.texture == (ecs::Entity)0 || sprite.texture == ecs::no_entity)
++		if (sprite.texture == (ecs::Entity)0 || sprite.texture == ecs::no_entity) {
+ 			continue;
+-		if (!show_storage.contains(entity))
++		}
++		if (!show_storage.contains(entity)) {
+ 			continue;
++		}
+ 
+ 		const auto& pos = position_storage.contains(entity) ? position_storage.get<Position>(entity) : Position{ geometry::Vec2{ 0, 0 } };
+ 		const auto& scale = scale_storage.contains(entity) ? scale_storage.get<Scale>(entity) : Scale{ geometry::Vec2{ 1, 1 } };
+@@ -55,7 +57,8 @@ void SpriteRenderingModule::process_signal(AssetUnloadingSignal<Texture>& signal
+ 	for (const auto entity : current_sprites)
+ 	{
+ 		auto& sprite = current_sprites.get<Sprite>(entity);
+-		if (sprite.texture == signal.id)
++		if (sprite.texture == signal.id) {
+ 			sprite.texture = ecs::no_entity;
++		}
+ 	}
+ }

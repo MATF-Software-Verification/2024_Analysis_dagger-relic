@@ -1,30 +1,16 @@
 diff --git a/.vscode/settings.json b/.vscode/settings.json
-index 94c5d22..f7c44e6 100644
+index d2cb0cb..05399c5 100644
 --- a/.vscode/settings.json
 +++ b/.vscode/settings.json
-@@ -18,5 +18,7 @@
-         "string_view": "cpp",
-         "vector": "cpp"
+@@ -77,5 +77,6 @@
+         "variant": "cpp"
      },
--    "mesonbuild.configureOnOpen": false
-+    "mesonbuild.configureOnOpen": false,
-+    "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild",
-+    "C_Cpp.default.compileCommands": "/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/compile_commands.json"
+     "mesonbuild.configureOnOpen": false,
+-    "C_Cpp.default.compileCommands": "builddir/vscode_compile_commands.json"
++    "C_Cpp.default.compileCommands": "builddir/vscode_compile_commands.json",
++    "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild"
  }
 \ No newline at end of file
-diff --git a/include/Access.h b/include/Access.h
-index 7e81d49..cb5fb42 100644
---- a/include/Access.h
-+++ b/include/Access.h
-@@ -151,6 +151,8 @@ struct SignalProcessor : public AccessTrait
- 	{
- 		core::Engine::get_instance().dispatcher.sink<T>().template connect<&SignalProcessor<T>::process_signal>(this);
- 	}
-+
-+	virtual ~SignalProcessor() = default;
- };
- 
- struct [[nodiscard]] EntitySpawnBuilder
 diff --git a/include/Lifecycle.h b/include/Lifecycle.h
 index 4d37fa6..cfdfc00 100644
 --- a/include/Lifecycle.h
@@ -52,24 +38,22 @@ index de1826d..0332ce9 100644
  	void load_assets() override;
  	ecs::Entity load_asset(String texture_name, String texture_path) override;
 diff --git a/src/Animations.cpp b/src/Animations.cpp
-index c30e69b..4f09c05 100644
+index 8197f07..20739b1 100644
 --- a/src/Animations.cpp
 +++ b/src/Animations.cpp
-@@ -5,9 +5,11 @@
+@@ -5,8 +5,10 @@
  
  void SpriteAnimation::change_to(String animation_name)
  {
 -	const auto current = Spritesheet::get_by_name(animation_name);
 -	if (this->spritesheet == current) return;
--
 +	const auto current = Spritesheet::get_by_name(std::move(animation_name));
 +	if (this->spritesheet == current) {
 +		return;
 +	}
-+	
+ 
  	spritesheet = current;
  	current_frame = 0;
- }
 diff --git a/src/Config.cpp b/src/Config.cpp
 index e8c0095..632173e 100644
 --- a/src/Config.cpp
@@ -207,24 +191,181 @@ index db41123..aa4bf75 100644
  		loaded_entity_mapping.erase(del);
  	}
 diff --git a/src/Main.cpp b/src/Main.cpp
-index 32bb52b..c7ac2b2 100644
+index 201ac93..6e5c295 100644
 --- a/src/Main.cpp
 +++ b/src/Main.cpp
-@@ -71,10 +71,10 @@ struct PhysicsSystem
- 	}
- };
+@@ -4,13 +4,7 @@
+ #include <algorithm>
+ #include <random>
  
+-
 -#define SCREEN_WIDTH 800
 -#define SCREEN_HEIGHT 600
 -#define BALL_RADIUS 16
 -#define SPEED_MOD 200.0f
-+constexpr int SCREEN_WIDTH = 800;
-+constexpr int SCREEN_HEIGHT = 600;
-+constexpr int BALL_RADIUS  = 16;
-+constexpr float SPEED_MOD = 200.0f;
+-#define RANGE_X 801
+-#define RANGE_Y 601
++#include "GameConfiguration.h"
  
- struct BallMovementSystem
- 	: public ecs::System
+ #include "Common.h"
+ #include "FSM.h"
+@@ -43,28 +37,27 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
+ 
+ 		spawn()
+ 			.with<Player>()
+-			.with<Health>(100)
+-			.with<Score>(0)
+-			.with<Sprite>(ecs::no_entity, 10)
++			.with<Health>(ENTITY_HEALTH)
++			.with<Score>(INITIAL_SCORE)
++			.with<Sprite>(ecs::no_entity, PLAYER_SPRITE_DEPTH)
+ 			.with<SpriteAnimation>(Spritesheet::get_by_name("Moose/Moose1_Idle"))
+-			.with<Position>(geometry::Vec2{400, 300})
++			.with<Position>(PLAYER_POSITION)
+ 			.with<Visibility>(true)
+ 			.with<Flip>(None)
+-			.with<AnimationSpeedController>(15.0f)
++			.with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
+ 			.with<KeyBindings>(KeyCode::KEY_W, KeyCode::KEY_S, KeyCode::KEY_A, KeyCode::KEY_D, KeyCode::KEY_J)
+ 			.done();
+ 
+ 		num = rand() % RANGE_X;
+ 		auto enemy2 = spawn()
+ 						  .with<Sprite>(ecs::no_entity)
+-						  .with<Health>(100)
++						  .with<Health>(ENTITY_HEALTH)
+ 						  .with<SpriteAnimation>(Spritesheet::get_by_name("Golem/Golem1_idle"))
+ 						  .with<Position>(geometry::Vec2{num, 0})
+ 						  .with<Visibility>(true)
+ 						  .with<Flip>(None)
+-						  .with<AnimationSpeedController>(15.0f)
+-						  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+-
++						  .with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
++						  .with<Enemy>(ENTITY_SPEED_VECTOR, ENEMY_MOVEMENT_SPEED)
+ 						  .done();
+ 
+ 		add_component<EnemyFSMController>(enemy2, enemy2);
+@@ -72,13 +65,13 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
+ 		num = rand() % RANGE_X;
+ 		auto enemy3 = spawn()
+ 						  .with<Sprite>(ecs::no_entity)
+-						  .with<Health>(100)
++						  .with<Health>(ENTITY_HEALTH)
+ 						  .with<SpriteAnimation>(Spritesheet::get_by_name("Golem/Golem1_idle"))
+ 						  .with<Position>(geometry::Vec2{num, 600})
+ 						  .with<Visibility>(true)
+ 						  .with<Flip>(None)
+-						  .with<AnimationSpeedController>(15.0f)
+-						  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
++						  .with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
++						  .with<Enemy>(ENTITY_SPEED_VECTOR, ENEMY_MOVEMENT_SPEED)
+ 						  .done();
+ 
+ 		add_component<EnemyFSMController>(enemy3, enemy3);
+@@ -86,13 +79,13 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
+ 		num = rand() % RANGE_Y;
+ 		auto enemy4 = spawn()
+ 						  .with<Sprite>(ecs::no_entity)
+-						  .with<Health>(100)
++						  .with<Health>(ENTITY_HEALTH)
+ 						  .with<SpriteAnimation>(Spritesheet::get_by_name("Golem/Golem1_idle"))
+ 						  .with<Position>(geometry::Vec2{0, num})
+ 						  .with<Visibility>(true)
+ 						  .with<Flip>(None)
+-						  .with<AnimationSpeedController>(15.0f)
+-						  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
++						  .with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
++						  .with<Enemy>(ENTITY_SPEED_VECTOR, ENEMY_MOVEMENT_SPEED)
+ 						  .done();
+ 
+ 		add_component<EnemyFSMController>(enemy4, enemy4);
+@@ -100,51 +93,50 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
+ 		num = rand() % RANGE_Y;
+ 		auto enemy5 = spawn()
+ 						  .with<Sprite>(ecs::no_entity)
+-						  .with<Health>(100)
++						  .with<Health>(ENTITY_HEALTH)
+ 						  .with<SpriteAnimation>(Spritesheet::get_by_name("Golem/Golem1_idle"))
+ 						  .with<Position>(geometry::Vec2{800, num})
+ 						  .with<Visibility>(true)
+ 						  .with<Flip>(None)
+-						  .with<AnimationSpeedController>(15.0f)
+-						  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
++						  .with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
++						  .with<Enemy>(ENTITY_SPEED_VECTOR, ENEMY_MOVEMENT_SPEED)
+ 						  .done();
+ 
+ 		add_component<EnemyFSMController>(enemy5, enemy5);
+ 
+ 		ScoreRender::init();
+-		auto score = spawn()
+-						 .with<ScoreRender>("Score: 0", 30)
+-						 .with<Sprite>(ecs::no_entity, -7)
++		spawn()
++						 .with<ScoreRender>("Score: 0", FONT_SIZE)
++						 .with<Sprite>(ecs::no_entity, TEXT_SPRITE_DEPTH)
+ 						 .with<Visibility>(true)
+ 						 .with<Position>(geometry::Vec2{50, 30})
+-						 .with<AnimationSpeedController>(1.0f)
++						 .with<AnimationSpeedController>(ENV_ANIMATION_SPEED)
+ 						 .done();
+ 
+ 		TimeRender::init();
+-		auto time = spawn()
+-						.with<TimeRender>("00:00:00", 30)
+-						.with<Sprite>(ecs::no_entity, -7)
++		spawn()
++						.with<TimeRender>("00:00:00", FONT_SIZE)
++						.with<Sprite>(ecs::no_entity, TEXT_SPRITE_DEPTH)
+ 						.with<Visibility>(true)
+ 						.with<Position>(geometry::Vec2{600, 30})
+-						.with<AnimationSpeedController>(1.0f)
++						.with<AnimationSpeedController>(ENV_ANIMATION_SPEED)
+ 						.done();
+ 
+-		auto health = spawn()
+-						  .with<Healthbar>(100.0f)
+-						  .with<Sprite>(ecs::no_entity, -7)
+-						  .with<SpriteAnimation>(Spritesheet::get_by_name("healthbar/health"))
+-						  .with<Scale>(geometry::Vec2{0.5, 0.5})
+-						  .with<Position>(geometry::Vec2{500, 100})
+-						  .with<Visibility>(true)
+-						  .with<AnimationSpeedController>(1.0f)
+-
+-						  .done();
++		spawn()
++						.with<Healthbar>(HEALTHBAR_HEALTH)
++						.with<Sprite>(ecs::no_entity, -7)
++						.with<SpriteAnimation>(Spritesheet::get_by_name("healthbar/health"))
++						.with<Scale>(HEALTHBAR_SPRITE_SCALE)
++						.with<Position>(geometry::Vec2{500, 100})
++						.with<Visibility>(true)
++						.with<AnimationSpeedController>(ENV_ANIMATION_SPEED)
++						.done();
+ 
+ 		spawn()
+ 			.with<Sprite>(ecs::no_entity, -10)
+ 			.with<SpriteAnimation>(Spritesheet::get_by_name("background/background"))
+ 			.with<Position>(geometry::Vec2{SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2})
+-			.with<AnimationSpeedController>(1.0f)
++			.with<AnimationSpeedController>(ENV_ANIMATION_SPEED)
+ 			.with<Visibility>(true)
+ 			.done();
+ 		// spawn()
+diff --git a/src/ScoreRender.cpp b/src/ScoreRender.cpp
+index 187892e..26ed7b9 100644
+--- a/src/ScoreRender.cpp
++++ b/src/ScoreRender.cpp
+@@ -3,7 +3,7 @@
+ #include <iostream>
+ 
+ ScoreRender::ScoreRender(String text, U32 font_size)
+-    : text(text), font_size(font_size)
++    : text(std::move(text)), font_size(font_size)
+ {
+     font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+ 
 diff --git a/src/SpriteRendering.cpp b/src/SpriteRendering.cpp
 index 271981e..0c15e9a 100644
 --- a/src/SpriteRendering.cpp
@@ -263,3 +404,113 @@ index 271981e..0c15e9a 100644
 +		}
  	}
  }
+diff --git a/src/TimeRender.cpp b/src/TimeRender.cpp
+index 7b9c662..7479a16 100644
+--- a/src/TimeRender.cpp
++++ b/src/TimeRender.cpp
+@@ -3,8 +3,7 @@
+ #include <iostream>
+ #include <random>
+ 
+-#define RANGE_X 801
+-#define RANGE_Y 601
++#include "GameConfiguration.h"
+ 
+ auto start = std::chrono::high_resolution_clock::now(); // get current time
+ int elapsed_time_ms = 0;
+@@ -14,7 +13,7 @@ int numSpawnedEnemies = 1;
+ 
+ 
+ TimeRender::TimeRender(String text, U32 font_size)
+-	: text(text), font_size(font_size)
++	: text(std::move(text)), font_size(font_size)
+ {
+ 	font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+ 
+@@ -47,7 +46,7 @@ void TimeRenderControlSystem::on_tick()
+ 
+ 	for (auto &&[entity, time_render, position, sprite] : access_storage().each())
+ 	{
+-		sprite.depth = -7;
++		sprite.depth = TEXT_SPRITE_DEPTH;
+ 		if (!time_render.font)
+ 		{
+ 			continue;
+@@ -64,13 +63,13 @@ void TimeRenderControlSystem::on_tick()
+ 
+ 		if ((seconds + 5) % 10 == 0)
+ 		{
+-			time_render.text_color = {238, 38, 38};
++			time_render.text_color = DEFAULT_TEXT_COLOR;
+ 		}
+ 
+ 		if (seconds % 10 == 0)
+ 		{
+ 
+-			time_render.text_color = {0, 0, 0};
++			time_render.text_color = SPECIAL_TEXT_COLOR;
+ 
+ 			if (!hasSpawnEnemies)
+ 			{
+@@ -80,13 +79,13 @@ void TimeRenderControlSystem::on_tick()
+ 					num = rand() % RANGE_X;
+ 					auto enemy2 = spawn()
+ 									  .with<Sprite>(ecs::no_entity)
+-									  .with<Health>(100)
++									  .with<Health>(ENTITY_HEALTH)
+ 									  .with<SpriteAnimation>(Spritesheet::get_by_name("Golem/Golem1_idle"))
+ 									  .with<Position>(geometry::Vec2{num, 0})
+ 									  .with<Visibility>(true)
+ 									  .with<Flip>(None)
+-									  .with<AnimationSpeedController>(15.0f)
+-									  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
++									  .with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
++									  .with<Enemy>(ENTITY_SPEED_VECTOR, ENEMY_MOVEMENT_SPEED)
+ 
+ 									  .done();
+ 
+@@ -96,13 +95,13 @@ void TimeRenderControlSystem::on_tick()
+ 					num = rand() % RANGE_X;
+ 					auto enemy3 = spawn()
+ 									  .with<Sprite>(ecs::no_entity)
+-									  .with<Health>(100)
++									  .with<Health>(ENTITY_HEALTH)
+ 									  .with<SpriteAnimation>(Spritesheet::get_by_name("Golem/Golem1_idle"))
+ 									  .with<Position>(geometry::Vec2{num, 600})
+ 									  .with<Visibility>(true)
+ 									  .with<Flip>(None)
+-									  .with<AnimationSpeedController>(15.0f)
+-									  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
++									  .with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
++									  .with<Enemy>(ENTITY_SPEED_VECTOR, ENEMY_MOVEMENT_SPEED)
+ 									  .done();
+ 
+ 					add_component<EnemyFSMController>(enemy3, enemy3);
+@@ -110,13 +109,13 @@ void TimeRenderControlSystem::on_tick()
+ 					num = rand() % RANGE_Y;
+ 					auto enemy4 = spawn()
+ 									  .with<Sprite>(ecs::no_entity)
+-									  .with<Health>(100)
++									  .with<Health>(ENTITY_HEALTH)
+ 									  .with<SpriteAnimation>(Spritesheet::get_by_name("Golem/Golem1_idle"))
+ 									  .with<Position>(geometry::Vec2{0, num})
+ 									  .with<Visibility>(true)
+ 									  .with<Flip>(None)
+-									  .with<AnimationSpeedController>(15.0f)
+-									  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
++									  .with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
++									  .with<Enemy>(ENTITY_SPEED_VECTOR, ENEMY_MOVEMENT_SPEED)
+ 									  .done();
+ 
+ 					add_component<EnemyFSMController>(enemy4, enemy4);
+@@ -129,8 +128,8 @@ void TimeRenderControlSystem::on_tick()
+ 									  .with<Position>(geometry::Vec2{800, num})
+ 									  .with<Visibility>(true)
+ 									  .with<Flip>(None)
+-									  .with<AnimationSpeedController>(15.0f)
+-									  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
++									  .with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
++									  .with<Enemy>(ENTITY_SPEED_VECTOR, ENEMY_MOVEMENT_SPEED)
+ 									  .done();
+ 
+ 					add_component<EnemyFSMController>(enemy5, enemy5);

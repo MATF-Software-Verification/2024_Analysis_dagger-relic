@@ -1,15 +1,17 @@
-70860 warnings generated.
-145081 warnings generated.
-217859 warnings generated.
-285081 warnings generated.
-356135 warnings generated.
-429566 warnings generated.
-501155 warnings generated.
-580351 warnings generated.
-665865 warnings generated.
-740267 warnings generated.
-818250 warnings generated.
-891598 warnings generated.
+70865 warnings generated.
+145728 warnings generated.
+218505 warnings generated.
+285727 warnings generated.
+356789 warnings generated.
+430225 warnings generated.
+501822 warnings generated.
+581043 warnings generated.
+685228 warnings generated.
+759637 warnings generated.
+855447 warnings generated.
+933445 warnings generated.
+1029836 warnings generated.
+1103189 warnings generated.
 ../src/Access.cpp:3:49: warning: variable 'unique_resources' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
 containers::Map<Size, ecs::Entity> AccessTrait::unique_resources = {};
                                                 ^
@@ -21,6 +23,12 @@ void AnimationModule::process_signal(core::PostRenderSignal&)
         for (auto& entity : storage)
              ^
              const 
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Animations.cpp:29:7: warning: variable name 'd' is too short, expected at least 3 characters [readability-identifier-length]
+                I32 d = sprite.depth;
+                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Animations.cpp:33:21: warning: narrowing conversion from 'std::vector::size_type' (aka 'unsigned long') to signed type 'I32' (aka 'int') is implementation-defined [cppcoreguidelines-narrowing-conversions]
+                anim.last_frame = sheet.sprites.size();
+                                  ^
 ../src/Assets.cpp:7:76: warning: variable 'loaders' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
 containers::Map<Size, memory::SharedPtr<AbstractAssetLoader>> AssetModule::loaders = {};
                                                                            ^
@@ -382,155 +390,48 @@ SpritesheetLoader::SpritesheetLoader()
 Bool SpritesheetLoader::contains(String name) const
 ~~~~                    ^
 auto                                                -> Bool
-../src/Main.cpp:1:9: warning: #pragma once in main file [clang-diagnostic-pragma-once-outside-header]
-#pragma once
+../src/Main.cpp:21:8: warning: 'Brawl' has virtual functions but non-virtual destructor [clang-diagnostic-non-virtual-dtor]
+struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAccessStorage<Player>, public MutAccessStorage<Enemy>, public MutAccessStorage<Healthbar>, public MutAccessStorage<ScoreRender>, public MutAccessStorage<TimeRender>
+       ^
+../src/Main.cpp:21:8: warning: destructor of 'Brawl' is public and non-virtual [cppcoreguidelines-virtual-class-destructor]
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:21:8: note: make it public and virtual
+struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAccessStorage<Player>, public MutAccessStorage<Enemy>, public MutAccessStorage<Healthbar>, public MutAccessStorage<ScoreRender>, public MutAccessStorage<TimeRender>
+       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:23:2: warning: constructor does not initialize these fields: num [cppcoreguidelines-pro-type-member-init]
+        Brawl()
         ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:36:7: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
-        Bool intersects(const geometry::Vec2& pad_center, const geometry::Vec2& ball_center, float ball_radius)
-        ~~~~ ^
-        auto                                                                                                    -> Bool
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:36:7: warning: method 'intersects' can be made static [readability-convert-member-functions-to-static]
-        Bool intersects(const geometry::Vec2& pad_center, const geometry::Vec2& ball_center, float ball_radius)
-             ^
-        static 
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:42:20: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                        abs(ball_center.x - pad_center.x),
-                                        ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:42:35: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                        abs(ball_center.x - pad_center.x),
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:70:45: warning: 600 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Position>(geometry::Vec2{num, 600})
+                                                                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:98:40: warning: 800 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Position>(geometry::Vec2{800, num})
+                                                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:112:39: warning: 50 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                 .with<Position>(geometry::Vec2{50, 30})
+                                                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:112:43: warning: 30 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                 .with<Position>(geometry::Vec2{50, 30})
+                                                                                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:121:38: warning: 600 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                .with<Position>(geometry::Vec2{600, 30})
+                                                                               ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:121:43: warning: 30 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                .with<Position>(geometry::Vec2{600, 30})
+                                                                                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:127:38: warning: 7 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                .with<Sprite>(ecs::no_entity, -7)
+                                                                               ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:130:38: warning: 500 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                .with<Position>(geometry::Vec2{500, 100})
+                                                                               ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:130:43: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                .with<Position>(geometry::Vec2{500, 100})
+                                                                                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:136:35: warning: 10 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        .with<Sprite>(ecs::no_entity, -10)
                                                        ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:43:20: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                        abs(ball_center.y - pad_center.y)
-                                        ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:43:35: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                        abs(ball_center.y - pad_center.y)
-                                                       ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:46:23: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                if (circle_distance.x > (pad_width + ball_radius)) { return false; }
-                                    ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:47:23: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                if (circle_distance.y > (pad_height + ball_radius)) { return false; }
-                                    ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:49:23: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                if (circle_distance.x <= pad_width) { return true; }
-                                    ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:50:23: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                if (circle_distance.y <= pad_height) { return true; }
-                                    ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:52:14: warning: variable name 'dx' is too short, expected at least 3 characters [readability-identifier-length]
-                const auto dx = circle_distance.x - pad_width;
-                           ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:52:35: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                const auto dx = circle_distance.x - pad_width;
-                                                ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:53:14: warning: variable name 'dy' is too short, expected at least 3 characters [readability-identifier-length]
-                const auto dy = circle_distance.y - pad_height;
-                           ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:53:35: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                const auto dy = circle_distance.y - pad_height;
-                                                ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:65:36: warning: 16 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
-                                if (intersects(pad.xy, pos.xy, 16))
-                                                               ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:74:15: warning: unused variable 'SCREEN_WIDTH' [clang-diagnostic-unused-const-variable]
-constexpr int SCREEN_WIDTH = 800;
-              ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:77:29: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
-constexpr float SPEED_MOD = 200.0f;
-                            ^    ~
-                                 F
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:85:15: warning: 'process_signal' overrides a member function but is not marked 'override' [clang-diagnostic-inconsistent-missing-override]
-        virtual void process_signal(PadCollisionSignal& signal)
-                     ^
-../include/Access.h:148:15: note: overridden virtual function is here
-        virtual void process_signal(T& signal) = 0;
-                     ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:85:15: warning: prefer using 'override' or (rarely) 'final' instead of 'virtual' [cppcoreguidelines-explicit-virtual-functions,modernize-use-override]
-        virtual void process_signal(PadCollisionSignal& signal)
-        ~~~~~~~~     ^
-                                                                override
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:88:14: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                ball.speed.x *= -1;
-                           ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:89:14: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                ball.speed.y = get_random(-0.8f, 0.8f);
-                           ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:89:30: warning: 0.8f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
-                ball.speed.y = get_random(-0.8f, 0.8f);
-                                           ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:89:30: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
-                ball.speed.y = get_random(-0.8f, 0.8f);
-                                           ^  ~
-                                              F
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:89:36: warning: 0.8f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
-                ball.speed.y = get_random(-0.8f, 0.8f);
-                                                 ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:89:36: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
-                ball.speed.y = get_random(-0.8f, 0.8f);
-                                                 ^  ~
-                                                    F
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:96:15: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                        if (pos.xy.y >= SCREEN_HEIGHT - BALL_RADIUS || pos.xy.y <= BALL_RADIUS)
-                                   ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:96:58: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                        if (pos.xy.y >= SCREEN_HEIGHT - BALL_RADIUS || pos.xy.y <= BALL_RADIUS)
-                                                                              ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:98:16: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                                ball.speed.y *= -1;
-                                           ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:123:12: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                                pos.xy.y -= SPEED_MOD * Time::delta_time();
-                                       ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:127:12: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
-                                pos.xy.y += SPEED_MOD * Time::delta_time();
-                                       ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:145:8: warning: Value stored to 'pad_left' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
-                auto pad_left = spawn()
-                     ^~~~~~~~   ~~~~~~~
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:145:8: note: Value stored to 'pad_left' during its initialization is never read
-                auto pad_left = spawn()
-                     ^~~~~~~~   ~~~~~~~
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:145:8: warning: unused variable 'pad_left' [clang-diagnostic-unused-variable]
-                auto pad_left = spawn()
-                     ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:149:36: warning: 50 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
-                        .with<Position>(geometry::Vec2{ 50, 300 })
-                                                        ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:149:40: warning: 300 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
-                        .with<Position>(geometry::Vec2{ 50, 300 })
-                                                            ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:154:8: warning: Value stored to 'pad_right' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
-                auto pad_right = spawn()
-                     ^~~~~~~~~   ~~~~~~~
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:154:8: note: Value stored to 'pad_right' during its initialization is never read
-                auto pad_right = spawn()
-                     ^~~~~~~~~   ~~~~~~~
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:154:8: warning: unused variable 'pad_right' [clang-diagnostic-unused-variable]
-                auto pad_right = spawn()
-                     ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:158:36: warning: 750 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
-                        .with<Position>(geometry::Vec2{ 750, 300 })
-                                                        ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:158:41: warning: 300 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
-                        .with<Position>(geometry::Vec2{ 750, 300 })
-                                                             ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:163:8: warning: Value stored to 'ball' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
-                auto ball = spawn()
-                     ^~~~   ~~~~~~~
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:163:8: note: Value stored to 'ball' during its initialization is never read
-                auto ball = spawn()
-                     ^~~~   ~~~~~~~
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:163:8: warning: unused variable 'ball' [clang-diagnostic-unused-variable]
-                auto ball = spawn()
-                     ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:166:36: warning: 300 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
-                        .with<Position>(geometry::Vec2{ 300, 100 })
-                                                        ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:166:41: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
-                        .with<Position>(geometry::Vec2{ 300, 100 })
-                                                             ^
-/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:173:5: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
-int main(int argc, char* argv[])
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:188:5: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+int main(int argc, char *argv[])
 ~~~ ^
 auto                             -> int
 /home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:13:23: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
@@ -568,6 +469,42 @@ note: this fix will not be applied because it overlaps with another fix
 /home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:56:48: warning: narrowing conversion from 'U32' (aka 'unsigned int') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
         SDL_SetWindowSize(state.window, signal.width, signal.height);
                                                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:8:5: warning: 'font' should be initialized in a member initializer of the constructor [cppcoreguidelines-prefer-member-initializer]
+    font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:8:55: warning: narrowing conversion from 'U32' (aka 'unsigned int') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+    font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+                                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:10:10: warning: implicit conversion 'TTF_Font *' (aka '_TTF_Font *') -> bool [readability-implicit-bool-conversion]
+    if (!font)
+        ~^
+              == nullptr
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:35:12: warning: the 'empty' method should be used to check for emptiness instead of 'size' [readability-container-size-empty]
+        if(MutAccessStorage<Player>::access_storage().size() == 0)
+           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           MutAccessStorage<Player>::access_storage().empty()
+../subprojects/entt-3.11.0/src/entt/entity/view.hpp:627:24: note: method 'basic_view'::empty() defined here
+    [[nodiscard]] bool empty() const noexcept {
+                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:44:29: warning: 7 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+            sprite.depth = -7;
+                            ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:45:18: warning: implicit conversion 'TTF_Font *' (aka '_TTF_Font *') -> bool [readability-implicit-bool-conversion]
+            if (!Score_render.font)
+                ~^
+                                   == nullptr
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:60:22: warning: narrowing conversion from 'float' to 'int' [cppcoreguidelines-narrowing-conversions]
+            dest.x = position.xy.x;
+                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:60:34: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+            dest.x = position.xy.x;
+                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:61:22: warning: narrowing conversion from 'float' to 'int' [cppcoreguidelines-narrowing-conversions]
+            dest.y = position.xy.y;
+                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:61:34: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+            dest.y = position.xy.y;
+                                 ^
 /home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:10:26: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
 ecs::Entity Spritesheet::get_by_name(String name)
 ~~~~~~~~~~~              ^
@@ -606,6 +543,77 @@ auto                                              -> ecs::Entity
                 SDL_RenderCopyEx(state.renderer, texture.inner, &sprite.clip, &dest, 0.0f, nullptr, (SDL_RendererFlip)flip);
                                                                                      ^  ~
                                                                                         F
+../src/TimeRender.cpp:8:6: warning: variable 'start' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+auto start = std::chrono::high_resolution_clock::now(); // get current time
+     ^
+../src/TimeRender.cpp:9:5: warning: variable 'elapsed_time_ms' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+int elapsed_time_ms = 0;
+    ^
+../src/TimeRender.cpp:10:6: warning: variable 'hasSpawnEnemies' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+bool hasSpawnEnemies = false;
+     ^
+../src/TimeRender.cpp:11:5: warning: variable 'num' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+int num;
+    ^
+../src/TimeRender.cpp:12:5: warning: variable 'numSpawnedEnemies' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+int numSpawnedEnemies = 1;
+    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:18:2: warning: 'font' should be initialized in a member initializer of the constructor [cppcoreguidelines-prefer-member-initializer]
+        font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:18:52: warning: narrowing conversion from 'U32' (aka 'unsigned int') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+        font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+                                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:20:7: warning: implicit conversion 'TTF_Font *' (aka '_TTF_Font *') -> bool [readability-implicit-bool-conversion]
+        if (!font)
+            ~^
+                  == nullptr
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:50:8: warning: implicit conversion 'TTF_Font *' (aka '_TTF_Font *') -> bool [readability-implicit-bool-conversion]
+                if (!time_render.font)
+                    ~^
+                                      == nullptr
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:56:21: warning: narrowing conversion from 'std::chrono::duration<long, std::ratio<1, 1000>>::rep' (aka 'long') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+                elapsed_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+                                  ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:57:36: warning: 1000 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                int minutes = elapsed_time_ms / (1000 * 60);
+                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:57:43: warning: 60 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                int minutes = elapsed_time_ms / (1000 * 60);
+                                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:58:36: warning: 1000 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                int seconds = (elapsed_time_ms / 1000);
+                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:64:18: warning: 5 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                if ((seconds + 5) % 10 == 0)
+                               ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:64:23: warning: 10 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                if ((seconds + 5) % 10 == 0)
+                                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:69:17: warning: 10 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                if (seconds % 10 == 0)
+                              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:100:48: warning: 600 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Position>(geometry::Vec2{num, 600})
+                                                                                                              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:126:26: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Health>(100)
+                                                                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:128:43: warning: 800 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Position>(geometry::Vec2{800, num})
+                                                                                                         ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:154:12: warning: narrowing conversion from 'float' to 'int' [cppcoreguidelines-narrowing-conversions]
+                dest.x = position.xy.x;
+                         ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:154:24: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                dest.x = position.xy.x;
+                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:155:12: warning: narrowing conversion from 'float' to 'int' [cppcoreguidelines-narrowing-conversions]
+                dest.y = position.xy.y;
+                         ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:155:24: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                dest.y = position.xy.y;
+                                     ^
 /home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Windowing.cpp:11:23: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
 bool WindowingModule::on_start()
 ~~~~                  ^
@@ -631,5 +639,5 @@ note: this fix will not be applied because it overlaps with another fix
         if (state.window)
             ^
                          != nullptr
-Suppressed 891386 warnings (891386 in non-user code).
+Suppressed 1102962 warnings (1102962 in non-user code).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

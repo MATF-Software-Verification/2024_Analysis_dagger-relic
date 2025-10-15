@@ -1,0 +1,1243 @@
+70868 warnings generated.
+145740 warnings generated.
+218522 warnings generated.
+285745 warnings generated.
+356812 warnings generated.
+430256 warnings generated.
+501862 warnings generated.
+581106 warnings generated.
+685414 warnings generated.
+759830 warnings generated.
+855678 warnings generated.
+933691 warnings generated.
+1030153 warnings generated.
+1103511 warnings generated.
+../src/Access.cpp:3:49: warning: variable 'unique_resources' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+containers::Map<Size, ecs::Entity> AccessTrait::unique_resources = {};
+                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Animations.cpp:8:48: warning: parameter 'animation_name' is passed by value and only copied once; consider moving it to avoid unnecessary copies [performance-unnecessary-value-param]
+        const auto current = Spritesheet::get_by_name(animation_name);
+                                                      ^
+                                                      std::move(    )
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Animations.cpp:9:35: warning: statement should be inside braces [readability-braces-around-statements]
+        if (this->spritesheet == current) return;
+                                         ^
+                                          {
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Animations.cpp:15:61: warning: all parameters should be named in a function [readability-named-parameter]
+void AnimationModule::process_signal(core::PostRenderSignal&)
+                                                            ^
+                                                             /*signal*/
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Animations.cpp:23:7: warning: 'auto &entity' can be declared as 'const auto &entity' [readability-qualified-auto]
+        for (auto& entity : storage)
+             ^
+             const 
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Animations.cpp:27:7: warning: variable name 'd' is too short, expected at least 3 characters [readability-identifier-length]
+                I32 d = sprite.depth;
+                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Animations.cpp:31:21: warning: narrowing conversion from 'std::vector::size_type' (aka 'unsigned long') to signed type 'I32' (aka 'int') is implementation-defined [cppcoreguidelines-narrowing-conversions]
+                anim.last_frame = sheet.sprites.size();
+                                  ^
+../src/Assets.cpp:7:76: warning: variable 'loaders' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+containers::Map<Size, memory::SharedPtr<AbstractAssetLoader>> AssetModule::loaders = {};
+                                                                           ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Assets.cpp:9:63: warning: all parameters should be named in a function [readability-named-parameter]
+void AbstractAssetLoader::process_signal(AssetLoadStartSignal&)
+                                                              ^
+                                                               /*signal*/
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Assets.cpp:16:19: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+bool AssetModule::on_start()
+~~~~              ^
+auto                         -> bool
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:4:8: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+Config read_ini_file(RawString name)
+~~~~~~ ^
+auto                                 -> Config
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:4:32: warning: pointer parameter 'name' can be pointer to const [readability-non-const-parameter]
+Config read_ini_file(RawString name)
+                               ^
+                     const 
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:13:8: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+Config load_config_from_ini_file(RawString fileName)
+~~~~~~ ^
+auto                                                 -> Config
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:16:12: warning: loop variable is copied but only used as const reference; consider making it a const reference [performance-for-range-copy]
+        for (auto it : get_config)
+                  ^
+             const  &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:16:12: warning: variable name 'it' is too short, expected at least 3 characters [readability-identifier-length]
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:31:8: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+Config override_config_with_command_line(Config get_config, Size argumentCount, RawString arguments[])
+~~~~~~ ^
+auto                                                                                                   -> Config
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:31:81: warning: do not declare C-style arrays, use std::array<> instead [cppcoreguidelines-avoid-c-arrays,modernize-avoid-c-arrays]
+Config override_config_with_command_line(Config get_config, Size argumentCount, RawString arguments[])
+                                                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:33:50: warning: do not use pointer arithmetic [cppcoreguidelines-pro-bounds-pointer-arithmetic]
+        Logger::info("Config loaded: dagger.path = {}", arguments[0]);
+                                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:34:33: warning: do not use pointer arithmetic [cppcoreguidelines-pro-bounds-pointer-arithmetic]
+        get_config["dagger"]["path"] = arguments[0];
+                                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:39:16: warning: do not use pointer arithmetic [cppcoreguidelines-pro-bounds-pointer-arithmetic]
+                String flag{ arguments[i] };
+                             ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:41:10: warning: redundant string initialization [readability-redundant-string-init]
+                String value = "";
+                       ^~~~~~~~~~
+                       value
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:43:30: warning: 'find' called with a string literal consisting of a single character; consider using the more effective overload accepting a character [performance-faster-string-find]
+                if ((delimiter = flag.find("=")) != String::npos)
+                                           ^~~
+                                           '='
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:53:16: warning: redundant boolean literal supplied to boolean operator [readability-simplify-boolean-expr]
+                        if (sign == false)
+                            ~~~~~~~~^~~~~
+                            !sign
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Config.cpp:61:31: warning: 'find' called with a string literal consisting of a single character; consider using the more effective overload accepting a character [performance-faster-string-find]
+                if ((delimiter = token.find(".")) != String::npos)
+                                            ^~~
+                                            '.'
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Diagnostics.cpp:4:37: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+const DiagEntry& DiagnosticsModule::get_diagnostics(DiagType diagType)
+~~~~~~~~~~~~~~~~                    ^
+auto                                                                   -> const DiagEntry&
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:6:22: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+bool EventBusModule::on_start()
+~~~~                 ^
+auto                            -> bool
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:15:13: warning: variable name 'e' is too short, expected at least 3 characters [readability-identifier-length]
+        bus::Event e;
+                   ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:25:13: warning: unused variable 'n' [clang-diagnostic-unused-variable]
+        static int n = 0;
+                   ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:25:13: warning: variable name 'n' is too short, expected at least 3 characters [readability-identifier-length]
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:72:12: warning: statement should be inside braces [readability-braces-around-statements]
+                if (quit)
+                         ^
+                          {
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:81:6: warning: variable name 'j' is too short, expected at least 3 characters [readability-identifier-length]
+                U8 j = i - 1;
+                   ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:82:42: warning: implicit conversion 'unsigned int' -> bool [readability-implicit-bool-conversion]
+                mouse_state.current_mouse_buttons[j] = mouse_state.mouse_button_mask & SDL_BUTTON(i);
+                                                       ^
+                                                       ((                                           ) != 0u)
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:86:4: warning: do not use array subscript when the index is not an integer constant expression [cppcoreguidelines-pro-bounds-constant-array-index]
+                        mouse_state.mouse_buttons[j] = MouseEventState::UpHold;
+                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:90:4: warning: do not use array subscript when the index is not an integer constant expression [cppcoreguidelines-pro-bounds-constant-array-index]
+                        mouse_state.mouse_buttons[j] = MouseEventState::DownNow;
+                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:94:4: warning: do not use array subscript when the index is not an integer constant expression [cppcoreguidelines-pro-bounds-constant-array-index]
+                        mouse_state.mouse_buttons[j] = MouseEventState::DownHold;
+                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/EventBus.cpp:98:4: warning: do not use array subscript when the index is not an integer constant expression [cppcoreguidelines-pro-bounds-constant-array-index]
+                        mouse_state.mouse_buttons[j] = MouseEventState::UpNow;
+                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:22:4: warning: initializer for base class 'core::AssetLoader<Texture>' is redundant [readability-redundant-member-init]
+        : core::AssetLoader<Texture>()
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:26:40: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+memory::RawPtr<Texture> TextureLoader::load_texture(String path)
+~~~~~~~~~~~~~~~~~~~~~~~                ^
+auto                                                             -> memory::RawPtr<Texture>
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:26:60: warning: the parameter 'path' is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+memory::RawPtr<Texture> TextureLoader::load_texture(String path)
+                                                           ^
+                                                    const &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:29:2: warning: initializing non-owner 'Texture *' with a newly created 'gsl::owner<>' [cppcoreguidelines-owning-memory]
+        auto* texture = new Texture();
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:40:23: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+String TextureLoader::get_default_asset_name() const
+~~~~~~                ^
+auto                                                 -> String
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:45:28: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+ecs::Entity TextureLoader::load_asset(String texture_name, String texture_path)
+~~~~~~~~~~~                ^
+auto                                                                            -> ecs::Entity
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:49:2: warning: 'auto loaded' can be declared as 'auto *loaded' [readability-qualified-auto]
+        auto loaded = load_texture(texture_path);
+        ^~~~~
+        auto *
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:72:3: warning: do not use 'else' after 'return' [readability-else-after-return]
+                else
+                ^~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:95:2: warning: multiple declarations in a single statement reduces readability [readability-isolate-declaration]
+        String name, path;
+        ^~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:104:12: warning: loop variable is copied but only used as const reference; consider making it a const reference [performance-for-range-copy]
+        for (auto loaded : loaded_entity_mapping)
+                  ^
+             const  &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:115:12: warning: loop variable is copied but only used as const reference; consider making it a const reference [performance-for-range-copy]
+        for (auto del : to_remove)
+                  ^
+             const  &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:129:63: warning: all parameters should be named in a function [readability-named-parameter]
+void TextureLoader::process_signal(core::WindowShutdownSignal&)
+                                                              ^
+                                                               /*signal*/
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:132:19: warning: variable name 'e' is too short, expected at least 3 characters [readability-identifier-length]
+        for (const auto& e : storage)
+                         ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:139:21: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+Bool TextureLoader::contains(String name) const
+~~~~                ^
+auto                                            -> Bool
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:148:27: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+String SpritesheetLoader::get_default_asset_name() const
+~~~~~~                    ^
+auto                                                     -> String
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:156:1: warning: duplicate include [readability-duplicate-include]
+#include <algorithm>
+^~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:161:39: warning: parameter name 's' is too short, expected at least 3 characters [readability-identifier-length]
+static inline void ltrim(std::string& s)
+                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:163:71: warning: parameter name 'ch' is too short, expected at least 3 characters [readability-identifier-length]
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+                                                                             ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:164:11: warning: implicit conversion 'int' -> bool [readability-implicit-bool-conversion]
+                return !std::isspace(ch);
+                       ~^
+                                         == 0
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:169:39: warning: parameter name 's' is too short, expected at least 3 characters [readability-identifier-length]
+static inline void rtrim(std::string& s)
+                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:171:62: warning: parameter name 'ch' is too short, expected at least 3 characters [readability-identifier-length]
+        s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+                                                                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:172:11: warning: implicit conversion 'int' -> bool [readability-implicit-bool-conversion]
+                return !std::isspace(ch);
+                       ~^
+                                         == 0
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:177:38: warning: parameter name 's' is too short, expected at least 3 characters [readability-identifier-length]
+static inline void trim(std::string& s)
+                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:184:27: warning: unused function 'ltrim_copy' [clang-diagnostic-unused-function]
+static inline std::string ltrim_copy(std::string s)
+                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:184:27: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+static inline std::string ltrim_copy(std::string s)
+              ~~~~~~~~~~~ ^
+              auto                                  -> std::string
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:184:50: warning: parameter name 's' is too short, expected at least 3 characters [readability-identifier-length]
+static inline std::string ltrim_copy(std::string s)
+                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:191:27: warning: unused function 'rtrim_copy' [clang-diagnostic-unused-function]
+static inline std::string rtrim_copy(std::string s)
+                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:191:27: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+static inline std::string rtrim_copy(std::string s)
+              ~~~~~~~~~~~ ^
+              auto                                  -> std::string
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:191:50: warning: parameter name 's' is too short, expected at least 3 characters [readability-identifier-length]
+static inline std::string rtrim_copy(std::string s)
+                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:198:27: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+static inline std::string trim_copy(std::string s)
+              ~~~~~~~~~~~ ^
+              auto                                 -> std::string
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:198:49: warning: parameter name 's' is too short, expected at least 3 characters [readability-identifier-length]
+static inline std::string trim_copy(std::string s)
+                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:211:28: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::tuple<String, String> read_tuple(std::string line)
+~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+auto                                                    -> std::tuple<String, String>
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:211:51: warning: the parameter 'line' is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+std::tuple<String, String> read_tuple(std::string line)
+                                                  ^
+                                      const      &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:213:25: warning: 'find' called with a string literal consisting of a single character; consider using the more effective overload accepting a character [performance-faster-string-find]
+        auto split = line.find(":");
+                               ^~~
+                               ':'
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:220:23: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::optional<String> read_pair(std::ifstream& input, std::string key)
+~~~~~~~~~~~~~~~~~~~~~ ^
+auto                                                                   -> std::optional<String>
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:220:67: warning: the parameter 'key' is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+std::optional<String> read_pair(std::ifstream& input, std::string key)
+                                                                  ^
+                                                      const      &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:225:25: warning: 'find' called with a string literal consisting of a single character; consider using the more effective overload accepting a character [performance-faster-string-find]
+        auto split = line.find(":");
+                               ^~~
+                               ':'
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:231:2: warning: do not use 'else' after 'return' [readability-else-after-return]
+        else
+        ^~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:237:5: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+int read_int(std::string str)
+~~~ ^
+auto                          -> int
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:237:26: warning: the parameter 'str' is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+int read_int(std::string str)
+                         ^
+             const      &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:239:6: warning: variable name 'a' is too short, expected at least 3 characters [readability-identifier-length]
+        int a = 0;
+            ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:240:2: warning: do not call c-style vararg functions [cppcoreguidelines-pro-type-vararg]
+        sscanf(str.c_str(), "%d", &a);
+        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:244:20: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::array<int, 4> read_4ints(std::string str)
+~~~~~~~~~~~~~~~~~~ ^
+auto                                           -> std::array<int, 4>
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:244:43: warning: the parameter 'str' is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+std::array<int, 4> read_4ints(std::string str)
+                                          ^
+                              const      &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:246:2: warning: multiple declarations in a single statement reduces readability [readability-isolate-declaration]
+        int a = 0, b = 0, c = 0, d = 0;
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:246:6: warning: variable name 'a' is too short, expected at least 3 characters [readability-identifier-length]
+        int a = 0, b = 0, c = 0, d = 0;
+            ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:246:13: warning: variable name 'b' is too short, expected at least 3 characters [readability-identifier-length]
+        int a = 0, b = 0, c = 0, d = 0;
+                   ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:246:20: warning: variable name 'c' is too short, expected at least 3 characters [readability-identifier-length]
+        int a = 0, b = 0, c = 0, d = 0;
+                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:246:27: warning: variable name 'd' is too short, expected at least 3 characters [readability-identifier-length]
+        int a = 0, b = 0, c = 0, d = 0;
+                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:247:2: warning: do not call c-style vararg functions [cppcoreguidelines-pro-type-vararg]
+        sscanf(str.c_str(), "%d, %d, %d, %d", &a, &b, &c, &d);
+        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:251:20: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::array<int, 2> read_2ints(std::string str)
+~~~~~~~~~~~~~~~~~~ ^
+auto                                           -> std::array<int, 2>
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:251:43: warning: the parameter 'str' is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+std::array<int, 2> read_2ints(std::string str)
+                                          ^
+                              const      &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:253:2: warning: multiple declarations in a single statement reduces readability [readability-isolate-declaration]
+        int a = 0, b = 0;
+        ^~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:253:6: warning: variable name 'a' is too short, expected at least 3 characters [readability-identifier-length]
+        int a = 0, b = 0;
+            ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:253:13: warning: variable name 'b' is too short, expected at least 3 characters [readability-identifier-length]
+        int a = 0, b = 0;
+                   ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:254:2: warning: do not call c-style vararg functions [cppcoreguidelines-pro-type-vararg]
+        sscanf(str.c_str(), "%d, %d", &a, &b);
+        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:258:22: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::array<float, 2> read_2floats(std::string str)
+~~~~~~~~~~~~~~~~~~~~ ^
+auto                                               -> std::array<float, 2>
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:258:47: warning: the parameter 'str' is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+std::array<float, 2> read_2floats(std::string str)
+                                              ^
+                                  const      &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:260:2: warning: multiple declarations in a single statement reduces readability [readability-isolate-declaration]
+        float a = 0.0f, b = 0.0f;
+        ^~~~~~~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:260:8: warning: variable name 'a' is too short, expected at least 3 characters [readability-identifier-length]
+        float a = 0.0f, b = 0.0f;
+              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:260:12: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+        float a = 0.0f, b = 0.0f;
+                  ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:260:18: warning: variable name 'b' is too short, expected at least 3 characters [readability-identifier-length]
+        float a = 0.0f, b = 0.0f;
+                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:260:22: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+        float a = 0.0f, b = 0.0f;
+                            ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:261:2: warning: do not call c-style vararg functions [cppcoreguidelines-pro-type-vararg]
+        sscanf(str.c_str(), "%f, %f", &a, &b);
+        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:265:22: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+std::array<float, 4> read_4floats(std::string str)
+~~~~~~~~~~~~~~~~~~~~ ^
+auto                                               -> std::array<float, 4>
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:265:47: warning: the parameter 'str' is copied for each invocation but only used as a const reference; consider making it a const reference [performance-unnecessary-value-param]
+std::array<float, 4> read_4floats(std::string str)
+                                              ^
+                                  const      &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:267:2: warning: multiple declarations in a single statement reduces readability [readability-isolate-declaration]
+        float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:267:8: warning: variable name 'a' is too short, expected at least 3 characters [readability-identifier-length]
+        float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:267:12: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+        float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+                  ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:267:18: warning: variable name 'b' is too short, expected at least 3 characters [readability-identifier-length]
+        float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:267:22: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+        float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+                            ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:267:28: warning: variable name 'c' is too short, expected at least 3 characters [readability-identifier-length]
+        float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+                                  ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:267:32: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+        float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+                                      ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:267:38: warning: variable name 'd' is too short, expected at least 3 characters [readability-identifier-length]
+        float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+                                            ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:267:42: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+        float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
+                                                ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:268:2: warning: do not call c-style vararg functions [cppcoreguidelines-pro-type-vararg]
+        sscanf(str.c_str(), "%f, %f, %f, %f", &a, &b, &c, &d);
+        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:289:12: warning: loop variable is copied but only used as const reference; consider making it a const reference [performance-for-range-copy]
+        for (auto loaded : loaded_entity_mapping)
+                  ^
+             const  &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:300:12: warning: loop variable is copied but only used as const reference; consider making it a const reference [performance-for-range-copy]
+        for (auto del : to_remove)
+                  ^
+             const  &
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:315:32: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+ecs::Entity SpritesheetLoader::load_asset(String spritesheet_name, String spritesheet_path)
+~~~~~~~~~~~                    ^
+auto                                                                                        -> ecs::Entity
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:334:13: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+        cell_count.x = dimensions[0];
+                   ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:334:17: warning: narrowing conversion from 'std::array<int, 2>::value_type' (aka 'int') to 'float' [cppcoreguidelines-narrowing-conversions]
+        cell_count.x = dimensions[0];
+                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:335:13: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+        cell_count.y = dimensions[1];
+                   ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:335:17: warning: narrowing conversion from 'std::array<int, 2>::value_type' (aka 'int') to 'float' [cppcoreguidelines-narrowing-conversions]
+        cell_count.y = dimensions[1];
+                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:350:15: warning: unused variable 'scale' [clang-diagnostic-unused-variable]
+                const auto& scale = read_2floats(read_pair(input, "scale").value());
+                            ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:355:7: warning: variable name 'x' is too short, expected at least 3 characters [readability-identifier-length]
+                I32 x{ clip[0] };
+                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:356:7: warning: variable name 'y' is too short, expected at least 3 characters [readability-identifier-length]
+                I32 y{ clip[1] };
+                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:357:7: warning: variable name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+                I32 w{ clip[2] };
+                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:358:7: warning: variable name 'h' is too short, expected at least 3 characters [readability-identifier-length]
+                I32 h{ clip[3] };
+                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:361:16: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                sprite.pivot.x = pivot[0];
+                             ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:362:16: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                sprite.pivot.y = pivot[1];
+                             ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:379:20: warning: use '= default' to define a trivial default constructor [modernize-use-equals-default]
+SpritesheetLoader::SpritesheetLoader()
+                   ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Loaders.cpp:382:25: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+Bool SpritesheetLoader::contains(String name) const
+~~~~                    ^
+auto                                                -> Bool
+../src/Main.cpp:8:9: warning: macro 'SCREEN_WIDTH' used to declare a constant; consider using a 'constexpr' constant [cppcoreguidelines-macro-usage]
+#define SCREEN_WIDTH 800
+        ^
+../src/Main.cpp:9:9: warning: macro 'SCREEN_HEIGHT' used to declare a constant; consider using a 'constexpr' constant [cppcoreguidelines-macro-usage]
+#define SCREEN_HEIGHT 600
+        ^
+../src/Main.cpp:10:9: warning: macro 'BALL_RADIUS' used to declare a constant; consider using a 'constexpr' constant [cppcoreguidelines-macro-usage]
+#define BALL_RADIUS 16
+        ^
+../src/Main.cpp:11:9: warning: macro 'SPEED_MOD' used to declare a constant; consider using a 'constexpr' constant [cppcoreguidelines-macro-usage]
+#define SPEED_MOD 200.0f
+        ^
+../src/Main.cpp:12:9: warning: macro 'RANGE_X' used to declare a constant; consider using a 'constexpr' constant [cppcoreguidelines-macro-usage]
+#define RANGE_X 801
+        ^
+../src/Main.cpp:13:9: warning: macro 'RANGE_Y' used to declare a constant; consider using a 'constexpr' constant [cppcoreguidelines-macro-usage]
+#define RANGE_Y 601
+        ^
+../src/Main.cpp:27:8: warning: 'Brawl' has virtual functions but non-virtual destructor [clang-diagnostic-non-virtual-dtor]
+struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAccessStorage<Player>, public MutAccessStorage<Enemy>, public MutAccessStorage<Healthbar>, public MutAccessStorage<ScoreRender>, public MutAccessStorage<TimeRender>
+       ^
+../src/Main.cpp:27:8: warning: destructor of 'Brawl' is public and non-virtual [cppcoreguidelines-virtual-class-destructor]
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:27:8: note: make it public and virtual
+struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAccessStorage<Player>, public MutAccessStorage<Enemy>, public MutAccessStorage<Healthbar>, public MutAccessStorage<ScoreRender>, public MutAccessStorage<TimeRender>
+       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:29:2: warning: constructor does not initialize these fields: num [cppcoreguidelines-pro-type-member-init]
+        Brawl()
+        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:46:18: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        .with<Health>(100)
+                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:48:34: warning: 10 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        .with<Sprite>(ecs::no_entity, 10)
+                                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:50:35: warning: 400 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        .with<Position>(geometry::Vec2{400, 300})
+                                                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:50:40: warning: 300 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        .with<Position>(geometry::Vec2{400, 300})
+                                                            ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:53:36: warning: 15.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        .with<AnimationSpeedController>(15.0f)
+                                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:53:36: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                        .with<AnimationSpeedController>(15.0f)
+                                                        ^   ~
+                                                            F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:60:23: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Health>(100)
+                                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:65:41: warning: 15.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<AnimationSpeedController>(15.0f)
+                                                                                  ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:65:41: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<AnimationSpeedController>(15.0f)
+                                                                                  ^   ~
+                                                                                      F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:66:44: warning: 90.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:66:44: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                     ^   ~
+                                                                                         F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:75:23: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Health>(100)
+                                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:77:45: warning: 600 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Position>(geometry::Vec2{num, 600})
+                                                                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:80:41: warning: 15.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<AnimationSpeedController>(15.0f)
+                                                                                  ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:80:41: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<AnimationSpeedController>(15.0f)
+                                                                                  ^   ~
+                                                                                      F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:81:44: warning: 90.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:81:44: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                     ^   ~
+                                                                                         F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:89:23: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Health>(100)
+                                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:94:41: warning: 15.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<AnimationSpeedController>(15.0f)
+                                                                                  ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:94:41: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<AnimationSpeedController>(15.0f)
+                                                                                  ^   ~
+                                                                                      F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:95:44: warning: 90.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:95:44: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                     ^   ~
+                                                                                         F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:103:23: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Health>(100)
+                                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:105:40: warning: 800 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Position>(geometry::Vec2{800, num})
+                                                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:108:41: warning: 15.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<AnimationSpeedController>(15.0f)
+                                                                                  ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:108:41: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<AnimationSpeedController>(15.0f)
+                                                                                  ^   ~
+                                                                                      F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:109:44: warning: 90.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:109:44: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                     ^   ~
+                                                                                         F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:115:8: warning: Value stored to 'score' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
+                auto score = spawn()
+                     ^~~~~   ~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:115:8: note: Value stored to 'score' during its initialization is never read
+                auto score = spawn()
+                     ^~~~~   ~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:115:8: warning: unused variable 'score' [clang-diagnostic-unused-variable]
+                auto score = spawn()
+                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:116:39: warning: 30 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                 .with<ScoreRender>("Score: 0", 30)
+                                                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:117:39: warning: 7 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                 .with<Sprite>(ecs::no_entity, -7)
+                                                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:119:39: warning: 50 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                 .with<Position>(geometry::Vec2{50, 30})
+                                                                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:119:43: warning: 30 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                 .with<Position>(geometry::Vec2{50, 30})
+                                                                                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:120:40: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                 .with<AnimationSpeedController>(1.0f)
+                                                                                 ^  ~
+                                                                                    F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:124:8: warning: Value stored to 'time' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
+                auto time = spawn()
+                     ^~~~   ~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:124:8: note: Value stored to 'time' during its initialization is never read
+                auto time = spawn()
+                     ^~~~   ~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:124:8: warning: unused variable 'time' [clang-diagnostic-unused-variable]
+                auto time = spawn()
+                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:125:37: warning: 30 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                .with<TimeRender>("00:00:00", 30)
+                                                                              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:126:38: warning: 7 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                .with<Sprite>(ecs::no_entity, -7)
+                                                                               ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:128:38: warning: 600 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                .with<Position>(geometry::Vec2{600, 30})
+                                                                               ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:128:43: warning: 30 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                .with<Position>(geometry::Vec2{600, 30})
+                                                                                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:129:39: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                .with<AnimationSpeedController>(1.0f)
+                                                                                ^  ~
+                                                                                   F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:132:8: warning: Value stored to 'health' during its initialization is never read [clang-analyzer-deadcode.DeadStores]
+                auto health = spawn()
+                     ^~~~~~   ~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:132:8: note: Value stored to 'health' during its initialization is never read
+                auto health = spawn()
+                     ^~~~~~   ~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:132:8: warning: unused variable 'health' [clang-diagnostic-unused-variable]
+                auto health = spawn()
+                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:133:26: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<Healthbar>(100.0f)
+                                                                   ^    ~
+                                                                        F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:134:40: warning: 7 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Sprite>(ecs::no_entity, -7)
+                                                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:136:37: warning: 0.5 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Scale>(geometry::Vec2{0.5, 0.5})
+                                                                              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:136:42: warning: 0.5 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Scale>(geometry::Vec2{0.5, 0.5})
+                                                                                   ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:137:40: warning: 500 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Position>(geometry::Vec2{500, 100})
+                                                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:137:45: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                  .with<Position>(geometry::Vec2{500, 100})
+                                                                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:139:41: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                  .with<AnimationSpeedController>(1.0f)
+                                                                                  ^  ~
+                                                                                     F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:144:35: warning: 10 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        .with<Sprite>(ecs::no_entity, -10)
+                                                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:147:36: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                        .with<AnimationSpeedController>(1.0f)
+                                                        ^  ~
+                                                           F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:196:5: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+int main(int argc, char *argv[])
+~~~ ^
+auto                             -> int
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:13:23: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+bool RenderingModule::on_start()
+~~~~                  ^
+auto                             -> bool
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:21:2: warning: 'auto &state' can be declared as 'const auto &state' [readability-qualified-auto]
+        auto& state = AccessUnique<WindowingState>::access_unique();
+        ^
+        const 
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:33:2: warning: 'auto &state' can be declared as 'const auto &state' [readability-qualified-auto]
+        auto& state = AccessUnique<WindowingState>::access_unique();
+        ^
+        const 
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:35:2: warning: multiple declarations in a single statement reduces readability [readability-isolate-declaration]
+        I32 w, h;
+        ^~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:35:6: warning: variable 'w' is not initialized [cppcoreguidelines-init-variables]
+        I32 w, h;
+            ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:35:6: warning: variable name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:35:9: warning: variable 'h' is not initialized [cppcoreguidelines-init-variables]
+        I32 w, h;
+               ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:35:9: warning: variable name 'h' is too short, expected at least 3 characters [readability-identifier-length]
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:55:2: warning: 'auto &state' can be declared as 'const auto &state' [readability-qualified-auto]
+        auto& state = AccessUnique<WindowingState>::access_unique();
+        ^
+        const 
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:56:34: warning: narrowing conversion from 'U32' (aka 'unsigned int') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+        SDL_SetWindowSize(state.window, signal.width, signal.height);
+                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Rendering.cpp:56:48: warning: narrowing conversion from 'U32' (aka 'unsigned int') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+        SDL_SetWindowSize(state.window, signal.width, signal.height);
+                                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:5:26: warning: pass by value and use std::move [modernize-pass-by-value]
+ScoreRender::ScoreRender(String text, U32 font_size)
+                         ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:6:12: warning: parameter 'text' is passed by value and only copied once; consider moving it to avoid unnecessary copies [performance-unnecessary-value-param]
+    : text(text), font_size(font_size)
+           ^
+           std::move( )
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:8:5: warning: 'font' should be initialized in a member initializer of the constructor [cppcoreguidelines-prefer-member-initializer]
+    font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:8:55: warning: narrowing conversion from 'U32' (aka 'unsigned int') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+    font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+                                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:10:10: warning: implicit conversion 'TTF_Font *' (aka '_TTF_Font *') -> bool [readability-implicit-bool-conversion]
+    if (!font)
+        ~^
+              == nullptr
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:35:12: warning: the 'empty' method should be used to check for emptiness instead of 'size' [readability-container-size-empty]
+        if(MutAccessStorage<Player>::access_storage().size() == 0)
+           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           MutAccessStorage<Player>::access_storage().empty()
+../subprojects/entt-3.11.0/src/entt/entity/view.hpp:627:24: note: method 'basic_view'::empty() defined here
+    [[nodiscard]] bool empty() const noexcept {
+                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:44:29: warning: 7 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+            sprite.depth = -7;
+                            ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:45:18: warning: implicit conversion 'TTF_Font *' (aka '_TTF_Font *') -> bool [readability-implicit-bool-conversion]
+            if (!Score_render.font)
+                ~^
+                                   == nullptr
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:60:22: warning: narrowing conversion from 'float' to 'int' [cppcoreguidelines-narrowing-conversions]
+            dest.x = position.xy.x;
+                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:60:34: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+            dest.x = position.xy.x;
+                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:61:22: warning: narrowing conversion from 'float' to 'int' [cppcoreguidelines-narrowing-conversions]
+            dest.y = position.xy.y;
+                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/ScoreRender.cpp:61:34: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+            dest.y = position.xy.y;
+                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:10:26: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+ecs::Entity Spritesheet::get_by_name(String name)
+~~~~~~~~~~~              ^
+auto                                              -> ecs::Entity
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:12:77: warning: parameter 'name' is passed by value and only copied once; consider moving it to avoid unnecessary copies [performance-unnecessary-value-param]
+        return AccessSystem<AssetModule>{}.access_system()->get_asset<Spritesheet>(name);
+                                                                                   ^
+                                                                                   std::move( )
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:31:76: warning: statement should be inside braces [readability-braces-around-statements]
+                if (sprite.texture == (ecs::Entity)0 || sprite.texture == ecs::no_entity)
+                                                                                         ^
+                                                                                          {
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:33:38: warning: statement should be inside braces [readability-braces-around-statements]
+                if (!show_storage.contains(entity))
+                                                   ^
+                                                    {
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:42:17: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                        (int)(pos.xy.x - sprite.pivot.x * sprite.clip.w),
+                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:42:34: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                        (int)(pos.xy.x - sprite.pivot.x * sprite.clip.w),
+                                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:42:38: warning: narrowing conversion from 'int' to 'float' [cppcoreguidelines-narrowing-conversions]
+                        (int)(pos.xy.x - sprite.pivot.x * sprite.clip.w),
+                                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:43:17: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                        (int)(pos.xy.y - sprite.pivot.y * sprite.clip.h),
+                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:43:34: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                        (int)(pos.xy.y - sprite.pivot.y * sprite.clip.h),
+                                                      ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:43:38: warning: narrowing conversion from 'int' to 'float' [cppcoreguidelines-narrowing-conversions]
+                        (int)(pos.xy.y - sprite.pivot.y * sprite.clip.h),
+                                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:44:10: warning: narrowing conversion from 'int' to 'float' [cppcoreguidelines-narrowing-conversions]
+                        (int)(sprite.clip.w * scale.xy.x),
+                              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:44:35: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                        (int)(sprite.clip.w * scale.xy.x),
+                                                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:45:10: warning: narrowing conversion from 'int' to 'float' [cppcoreguidelines-narrowing-conversions]
+                        (int)(sprite.clip.h * scale.xy.y)
+                              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:45:35: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                        (int)(sprite.clip.h * scale.xy.y)
+                                                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:47:72: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                SDL_RenderCopyEx(state.renderer, texture.inner, &sprite.clip, &dest, 0.0f, nullptr, (SDL_RendererFlip)flip);
+                                                                                     ^  ~
+                                                                                        F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/SpriteRendering.cpp:58:35: warning: statement should be inside braces [readability-braces-around-statements]
+                if (sprite.texture == signal.id)
+                                                ^
+                                                 {
+../src/TimeRender.cpp:6:9: warning: macro 'RANGE_X' used to declare a constant; consider using a 'constexpr' constant [cppcoreguidelines-macro-usage]
+#define RANGE_X 801
+        ^
+../src/TimeRender.cpp:7:9: warning: macro 'RANGE_Y' used to declare a constant; consider using a 'constexpr' constant [cppcoreguidelines-macro-usage]
+#define RANGE_Y 601
+        ^
+../src/TimeRender.cpp:9:6: warning: variable 'start' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+auto start = std::chrono::high_resolution_clock::now(); // get current time
+     ^
+../src/TimeRender.cpp:10:5: warning: variable 'elapsed_time_ms' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+int elapsed_time_ms = 0;
+    ^
+../src/TimeRender.cpp:11:6: warning: variable 'hasSpawnEnemies' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+bool hasSpawnEnemies = false;
+     ^
+../src/TimeRender.cpp:12:5: warning: variable 'num' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+int num;
+    ^
+../src/TimeRender.cpp:13:5: warning: variable 'numSpawnedEnemies' is non-const and globally accessible, consider making it const [cppcoreguidelines-avoid-non-const-global-variables]
+int numSpawnedEnemies = 1;
+    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:16:24: warning: pass by value and use std::move [modernize-pass-by-value]
+TimeRender::TimeRender(String text, U32 font_size)
+                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:17:9: warning: parameter 'text' is passed by value and only copied once; consider moving it to avoid unnecessary copies [performance-unnecessary-value-param]
+        : text(text), font_size(font_size)
+               ^
+               std::move( )
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:19:2: warning: 'font' should be initialized in a member initializer of the constructor [cppcoreguidelines-prefer-member-initializer]
+        font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:19:52: warning: narrowing conversion from 'U32' (aka 'unsigned int') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+        font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
+                                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:21:7: warning: implicit conversion 'TTF_Font *' (aka '_TTF_Font *') -> bool [readability-implicit-bool-conversion]
+        if (!font)
+            ~^
+                  == nullptr
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:50:19: warning: 7 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                sprite.depth = -7;
+                                ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:51:8: warning: implicit conversion 'TTF_Font *' (aka '_TTF_Font *') -> bool [readability-implicit-bool-conversion]
+                if (!time_render.font)
+                    ~^
+                                      == nullptr
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:57:21: warning: narrowing conversion from 'std::chrono::duration<long, std::ratio<1, 1000>>::rep' (aka 'long') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+                elapsed_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+                                  ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:58:36: warning: 1000 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                int minutes = elapsed_time_ms / (1000 * 60);
+                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:58:43: warning: 60 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                int minutes = elapsed_time_ms / (1000 * 60);
+                                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:59:36: warning: 1000 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                int seconds = (elapsed_time_ms / 1000);
+                                                 ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:65:18: warning: 5 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                if ((seconds + 5) % 10 == 0)
+                               ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:65:23: warning: 10 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                if ((seconds + 5) % 10 == 0)
+                                    ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:67:30: warning: 238 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        time_render.text_color = {238, 38, 38};
+                                                  ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:67:35: warning: 38 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        time_render.text_color = {238, 38, 38};
+                                                       ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:67:39: warning: 38 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                        time_render.text_color = {238, 38, 38};
+                                                           ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:70:17: warning: 10 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                if (seconds % 10 == 0)
+                              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:83:26: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Health>(100)
+                                                                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:88:44: warning: 15.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<AnimationSpeedController>(15.0f)
+                                                                                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:88:44: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                                          .with<AnimationSpeedController>(15.0f)
+                                                                                                          ^   ~
+                                                                                                              F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:89:47: warning: 90.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                                             ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:89:47: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                                          .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                                             ^   ~
+                                                                                                                 F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:99:26: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Health>(100)
+                                                                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:101:48: warning: 600 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Position>(geometry::Vec2{num, 600})
+                                                                                                              ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:104:44: warning: 15.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<AnimationSpeedController>(15.0f)
+                                                                                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:104:44: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                                          .with<AnimationSpeedController>(15.0f)
+                                                                                                          ^   ~
+                                                                                                              F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:105:47: warning: 90.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                                             ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:105:47: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                                          .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                                             ^   ~
+                                                                                                                 F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:113:26: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Health>(100)
+                                                                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:118:44: warning: 15.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<AnimationSpeedController>(15.0f)
+                                                                                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:118:44: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                                          .with<AnimationSpeedController>(15.0f)
+                                                                                                          ^   ~
+                                                                                                              F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:119:47: warning: 90.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                                             ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:119:47: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                                          .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                                             ^   ~
+                                                                                                                 F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:127:26: warning: 100 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Health>(100)
+                                                                                        ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:129:43: warning: 800 is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Position>(geometry::Vec2{800, num})
+                                                                                                         ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:132:44: warning: 15.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<AnimationSpeedController>(15.0f)
+                                                                                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:132:44: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                                          .with<AnimationSpeedController>(15.0f)
+                                                                                                          ^   ~
+                                                                                                              F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:133:47: warning: 90.0f is a magic number; consider replacing it with a named constant [cppcoreguidelines-avoid-magic-numbers,readability-magic-numbers]
+                                                                          .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                                             ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:133:47: warning: floating point literal has suffix 'f', which is not uppercase [readability-uppercase-literal-suffix]
+                                                                          .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
+                                                                                                             ^   ~
+                                                                                                                 F
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:155:12: warning: narrowing conversion from 'float' to 'int' [cppcoreguidelines-narrowing-conversions]
+                dest.x = position.xy.x;
+                         ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:155:24: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                dest.x = position.xy.x;
+                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:156:12: warning: narrowing conversion from 'float' to 'int' [cppcoreguidelines-narrowing-conversions]
+                dest.y = position.xy.y;
+                         ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:156:24: warning: do not access members of unions; use (boost::)variant instead [cppcoreguidelines-pro-type-union-access]
+                dest.y = position.xy.y;
+                                     ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Windowing.cpp:11:23: warning: use a trailing return type for this function [modernize-use-trailing-return-type]
+bool WindowingModule::on_start()
+~~~~                  ^
+auto                             -> bool
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Windowing.cpp:37:2: warning: multiple declarations in a single statement reduces readability [readability-isolate-declaration]
+        int w, h;
+        ^~~~~~~~~
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Windowing.cpp:37:6: warning: variable 'w' is not initialized [cppcoreguidelines-init-variables]
+        int w, h;
+            ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Windowing.cpp:37:6: warning: variable name 'w' is too short, expected at least 3 characters [readability-identifier-length]
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Windowing.cpp:37:9: warning: variable 'h' is not initialized [cppcoreguidelines-init-variables]
+        int w, h;
+               ^
+note: this fix will not be applied because it overlaps with another fix
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Windowing.cpp:37:9: warning: variable name 'h' is too short, expected at least 3 characters [readability-identifier-length]
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Windowing.cpp:51:6: warning: implicit conversion 'RawPtr<SDL_Renderer>' (aka 'SDL_Renderer *') -> bool [readability-implicit-bool-conversion]
+        if (state.renderer)
+            ^
+                           != nullptr
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Windowing.cpp:57:6: warning: implicit conversion 'RawPtr<SDL_Window>' (aka 'SDL_Window *') -> bool [readability-implicit-bool-conversion]
+        if (state.window)
+            ^
+                         != nullptr
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_construct.h:88:2: warning: destructor called on non-final 'EnemyFSMController' that has virtual functions but non-virtual destructor [clang-diagnostic-delete-non-abstract-non-virtual-dtor]
+        __location->~_Tp();
+        ^
+../subprojects/entt-3.11.0/src/entt/entity/storage.hpp:354:22: note: in instantiation of function template specialization 'std::destroy_at<EnemyFSMController>' requested here
+                std::destroy_at(std::addressof(other));
+                     ^
+../subprojects/entt-3.11.0/src/entt/entity/storage.hpp:419:14: note: in instantiation of member function 'entt::basic_storage<EnemyFSMController>::pop' requested here
+    explicit basic_storage(const allocator_type &allocator)
+             ^
+../subprojects/entt-3.11.0/src/entt/entity/storage_mixin.hpp:66:11: note: in instantiation of member function 'entt::basic_storage<EnemyFSMController>::basic_storage' requested here
+        : Type{allocator},
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:162:23: note: in instantiation of member function 'entt::sigh_storage_mixin<entt::basic_storage<EnemyFSMController>>::sigh_storage_mixin' requested here
+        { ::new((void *)__p) _Up(std::forward<_Args>(__args)...); }
+                             ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/alloc_traits.h:516:8: note: in instantiation of function template specialization '__gnu_cxx::new_allocator<entt::entity>::construct<entt::sigh_storage_mixin<entt::basic_storage<EnemyFSMController>>, std::allocator<entt::entity>>' requested here
+          __a.construct(__p, std::forward<_Args>(__args)...);
+              ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:519:30: note: (skipping 2 contexts in backtrace; use -ftemplate-backtrace-limit=0 to see all)
+          allocator_traits<_Alloc>::construct(__a, _M_ptr(),
+                                    ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:1342:14: note: in instantiation of function template specialization 'std::__shared_count<__gnu_cxx::_S_atomic>::__shared_count<entt::sigh_storage_mixin<entt::basic_storage<EnemyFSMController>>, std::allocator<entt::entity>, std::allocator<entt::entity>>' requested here
+        : _M_ptr(), _M_refcount(_M_ptr, __tag, std::forward<_Args>(__args)...)
+                    ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:409:4: note: in instantiation of function template specialization 'std::__shared_ptr<entt::sigh_storage_mixin<entt::basic_storage<EnemyFSMController>>, __gnu_cxx::_S_atomic>::__shared_ptr<std::allocator<entt::entity>, std::allocator<entt::entity>>' requested here
+        : __shared_ptr<_Tp>(__tag, std::forward<_Args>(__args)...)
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:862:14: note: in instantiation of function template specialization 'std::shared_ptr<entt::sigh_storage_mixin<entt::basic_storage<EnemyFSMController>>>::shared_ptr<std::allocator<entt::entity>, std::allocator<entt::entity>>' requested here
+      return shared_ptr<_Tp>(_Sp_alloc_shared_tag<_Alloc>{__a},
+             ^
+../subprojects/entt-3.11.0/src/entt/entity/registry.hpp:322:26: note: in instantiation of function template specialization 'std::allocate_shared<entt::sigh_storage_mixin<entt::basic_storage<EnemyFSMController>>, std::allocator<entt::entity>, std::allocator<entt::entity>>' requested here
+            cpool = std::allocate_shared<storage_for_type<std::remove_const_t<Type>>>(get_allocator(), get_allocator());
+                         ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/TimeRender.cpp:94:6: note: in instantiation of function template specialization 'EntityModifier::add_component<EnemyFSMController, entt::entity &>' requested here
+                                        add_component<EnemyFSMController>(enemy2, enemy2);
+                                        ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/stl_construct.h:88:15: note: qualify call to silence this warning
+        __location->~_Tp();
+                     ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:4: warning: destructor called on non-final 'DamageSystem' that has virtual functions but non-virtual destructor [clang-diagnostic-delete-non-abstract-non-virtual-dtor]
+        { __p->~_Up(); }
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/alloc_traits.h:535:8: note: in instantiation of function template specialization '__gnu_cxx::new_allocator<DamageSystem>::destroy<DamageSystem>' requested here
+          __a.destroy(__p);
+              ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:528:28: note: in instantiation of function template specialization 'std::allocator_traits<std::allocator<DamageSystem>>::destroy<DamageSystem>' requested here
+        allocator_traits<_Alloc>::destroy(_M_impl._M_alloc(), _M_ptr());
+                                  ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:514:2: note: in instantiation of member function 'std::_Sp_counted_ptr_inplace<DamageSystem, std::allocator<DamageSystem>, __gnu_cxx::_S_atomic>::_M_dispose' requested here
+        _Sp_counted_ptr_inplace(_Alloc __a, _Args&&... __args)
+        ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:651:6: note: in instantiation of function template specialization 'std::_Sp_counted_ptr_inplace<DamageSystem, std::allocator<DamageSystem>, __gnu_cxx::_S_atomic>::_Sp_counted_ptr_inplace<>' requested here
+            _Sp_cp_type(__a._M_a, std::forward<_Args>(__args)...);
+            ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:1342:14: note: in instantiation of function template specialization 'std::__shared_count<__gnu_cxx::_S_atomic>::__shared_count<DamageSystem, std::allocator<DamageSystem>>' requested here
+        : _M_ptr(), _M_refcount(_M_ptr, __tag, std::forward<_Args>(__args)...)
+                    ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:409:4: note: in instantiation of function template specialization 'std::__shared_ptr<DamageSystem, __gnu_cxx::_S_atomic>::__shared_ptr<std::allocator<DamageSystem>>' requested here
+        : __shared_ptr<_Tp>(__tag, std::forward<_Args>(__args)...)
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:862:14: note: in instantiation of function template specialization 'std::shared_ptr<DamageSystem>::shared_ptr<std::allocator<DamageSystem>>' requested here
+      return shared_ptr<_Tp>(_Sp_alloc_shared_tag<_Alloc>{__a},
+             ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:878:19: note: in instantiation of function template specialization 'std::allocate_shared<DamageSystem, std::allocator<DamageSystem>>' requested here
+      return std::allocate_shared<_Tp>(std::allocator<_Tp_nc>(),
+                  ^
+../include/Definitions.h:169:36: note: in instantiation of function template specialization 'std::make_shared<DamageSystem>' requested here
+        const auto make_shared_ptr = std::make_shared<T>;
+                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:34:10: note: in instantiation of function template specialization 'core::Engine::use<DamageSystem>' requested here
+                engine.use<DamageSystem>();
+                       ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:10: note: qualify call to silence this warning
+        { __p->~_Up(); }
+                ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:4: warning: destructor called on non-final 'EnemiesController' that has virtual functions but non-virtual destructor [clang-diagnostic-delete-non-abstract-non-virtual-dtor]
+        { __p->~_Up(); }
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/alloc_traits.h:535:8: note: in instantiation of function template specialization '__gnu_cxx::new_allocator<EnemiesController>::destroy<EnemiesController>' requested here
+          __a.destroy(__p);
+              ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:528:28: note: in instantiation of function template specialization 'std::allocator_traits<std::allocator<EnemiesController>>::destroy<EnemiesController>' requested here
+        allocator_traits<_Alloc>::destroy(_M_impl._M_alloc(), _M_ptr());
+                                  ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:514:2: note: in instantiation of member function 'std::_Sp_counted_ptr_inplace<EnemiesController, std::allocator<EnemiesController>, __gnu_cxx::_S_atomic>::_M_dispose' requested here
+        _Sp_counted_ptr_inplace(_Alloc __a, _Args&&... __args)
+        ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:651:6: note: in instantiation of function template specialization 'std::_Sp_counted_ptr_inplace<EnemiesController, std::allocator<EnemiesController>, __gnu_cxx::_S_atomic>::_Sp_counted_ptr_inplace<>' requested here
+            _Sp_cp_type(__a._M_a, std::forward<_Args>(__args)...);
+            ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:1342:14: note: in instantiation of function template specialization 'std::__shared_count<__gnu_cxx::_S_atomic>::__shared_count<EnemiesController, std::allocator<EnemiesController>>' requested here
+        : _M_ptr(), _M_refcount(_M_ptr, __tag, std::forward<_Args>(__args)...)
+                    ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:409:4: note: in instantiation of function template specialization 'std::__shared_ptr<EnemiesController, __gnu_cxx::_S_atomic>::__shared_ptr<std::allocator<EnemiesController>>' requested here
+        : __shared_ptr<_Tp>(__tag, std::forward<_Args>(__args)...)
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:862:14: note: in instantiation of function template specialization 'std::shared_ptr<EnemiesController>::shared_ptr<std::allocator<EnemiesController>>' requested here
+      return shared_ptr<_Tp>(_Sp_alloc_shared_tag<_Alloc>{__a},
+             ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:878:19: note: in instantiation of function template specialization 'std::allocate_shared<EnemiesController, std::allocator<EnemiesController>>' requested here
+      return std::allocate_shared<_Tp>(std::allocator<_Tp_nc>(),
+                  ^
+../include/Definitions.h:169:36: note: in instantiation of function template specialization 'std::make_shared<EnemiesController>' requested here
+        const auto make_shared_ptr = std::make_shared<T>;
+                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:35:10: note: in instantiation of function template specialization 'core::Engine::use<EnemiesController>' requested here
+                engine.use<EnemiesController>();
+                       ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:10: note: qualify call to silence this warning
+        { __p->~_Up(); }
+                ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:4: warning: destructor called on non-final 'PhysicsSystem' that has virtual functions but non-virtual destructor [clang-diagnostic-delete-non-abstract-non-virtual-dtor]
+        { __p->~_Up(); }
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/alloc_traits.h:535:8: note: in instantiation of function template specialization '__gnu_cxx::new_allocator<PhysicsSystem>::destroy<PhysicsSystem>' requested here
+          __a.destroy(__p);
+              ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:528:28: note: in instantiation of function template specialization 'std::allocator_traits<std::allocator<PhysicsSystem>>::destroy<PhysicsSystem>' requested here
+        allocator_traits<_Alloc>::destroy(_M_impl._M_alloc(), _M_ptr());
+                                  ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:514:2: note: in instantiation of member function 'std::_Sp_counted_ptr_inplace<PhysicsSystem, std::allocator<PhysicsSystem>, __gnu_cxx::_S_atomic>::_M_dispose' requested here
+        _Sp_counted_ptr_inplace(_Alloc __a, _Args&&... __args)
+        ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:651:6: note: in instantiation of function template specialization 'std::_Sp_counted_ptr_inplace<PhysicsSystem, std::allocator<PhysicsSystem>, __gnu_cxx::_S_atomic>::_Sp_counted_ptr_inplace<>' requested here
+            _Sp_cp_type(__a._M_a, std::forward<_Args>(__args)...);
+            ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:1342:14: note: in instantiation of function template specialization 'std::__shared_count<__gnu_cxx::_S_atomic>::__shared_count<PhysicsSystem, std::allocator<PhysicsSystem>>' requested here
+        : _M_ptr(), _M_refcount(_M_ptr, __tag, std::forward<_Args>(__args)...)
+                    ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:409:4: note: in instantiation of function template specialization 'std::__shared_ptr<PhysicsSystem, __gnu_cxx::_S_atomic>::__shared_ptr<std::allocator<PhysicsSystem>>' requested here
+        : __shared_ptr<_Tp>(__tag, std::forward<_Args>(__args)...)
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:862:14: note: in instantiation of function template specialization 'std::shared_ptr<PhysicsSystem>::shared_ptr<std::allocator<PhysicsSystem>>' requested here
+      return shared_ptr<_Tp>(_Sp_alloc_shared_tag<_Alloc>{__a},
+             ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:878:19: note: in instantiation of function template specialization 'std::allocate_shared<PhysicsSystem, std::allocator<PhysicsSystem>>' requested here
+      return std::allocate_shared<_Tp>(std::allocator<_Tp_nc>(),
+                  ^
+../include/Definitions.h:169:36: note: in instantiation of function template specialization 'std::make_shared<PhysicsSystem>' requested here
+        const auto make_shared_ptr = std::make_shared<T>;
+                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:33:10: note: in instantiation of function template specialization 'core::Engine::use<PhysicsSystem>' requested here
+                engine.use<PhysicsSystem>();
+                       ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:10: note: qualify call to silence this warning
+        { __p->~_Up(); }
+                ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:4: warning: destructor called on non-final 'PlayerControlsSystem' that has virtual functions but non-virtual destructor [clang-diagnostic-delete-non-abstract-non-virtual-dtor]
+        { __p->~_Up(); }
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/alloc_traits.h:535:8: note: in instantiation of function template specialization '__gnu_cxx::new_allocator<PlayerControlsSystem>::destroy<PlayerControlsSystem>' requested here
+          __a.destroy(__p);
+              ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:528:28: note: in instantiation of function template specialization 'std::allocator_traits<std::allocator<PlayerControlsSystem>>::destroy<PlayerControlsSystem>' requested here
+        allocator_traits<_Alloc>::destroy(_M_impl._M_alloc(), _M_ptr());
+                                  ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:514:2: note: in instantiation of member function 'std::_Sp_counted_ptr_inplace<PlayerControlsSystem, std::allocator<PlayerControlsSystem>, __gnu_cxx::_S_atomic>::_M_dispose' requested here
+        _Sp_counted_ptr_inplace(_Alloc __a, _Args&&... __args)
+        ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:651:6: note: in instantiation of function template specialization 'std::_Sp_counted_ptr_inplace<PlayerControlsSystem, std::allocator<PlayerControlsSystem>, __gnu_cxx::_S_atomic>::_Sp_counted_ptr_inplace<>' requested here
+            _Sp_cp_type(__a._M_a, std::forward<_Args>(__args)...);
+            ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:1342:14: note: in instantiation of function template specialization 'std::__shared_count<__gnu_cxx::_S_atomic>::__shared_count<PlayerControlsSystem, std::allocator<PlayerControlsSystem>>' requested here
+        : _M_ptr(), _M_refcount(_M_ptr, __tag, std::forward<_Args>(__args)...)
+                    ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:409:4: note: in instantiation of function template specialization 'std::__shared_ptr<PlayerControlsSystem, __gnu_cxx::_S_atomic>::__shared_ptr<std::allocator<PlayerControlsSystem>>' requested here
+        : __shared_ptr<_Tp>(__tag, std::forward<_Args>(__args)...)
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:862:14: note: in instantiation of function template specialization 'std::shared_ptr<PlayerControlsSystem>::shared_ptr<std::allocator<PlayerControlsSystem>>' requested here
+      return shared_ptr<_Tp>(_Sp_alloc_shared_tag<_Alloc>{__a},
+             ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:878:19: note: in instantiation of function template specialization 'std::allocate_shared<PlayerControlsSystem, std::allocator<PlayerControlsSystem>>' requested here
+      return std::allocate_shared<_Tp>(std::allocator<_Tp_nc>(),
+                  ^
+../include/Definitions.h:169:36: note: in instantiation of function template specialization 'std::make_shared<PlayerControlsSystem>' requested here
+        const auto make_shared_ptr = std::make_shared<T>;
+                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:32:10: note: in instantiation of function template specialization 'core::Engine::use<PlayerControlsSystem>' requested here
+                engine.use<PlayerControlsSystem>();
+                       ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:10: note: qualify call to silence this warning
+        { __p->~_Up(); }
+                ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:4: warning: destructor called on non-final 'ScoreRenderControlSystem' that has virtual functions but non-virtual destructor [clang-diagnostic-delete-non-abstract-non-virtual-dtor]
+        { __p->~_Up(); }
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/alloc_traits.h:535:8: note: in instantiation of function template specialization '__gnu_cxx::new_allocator<ScoreRenderControlSystem>::destroy<ScoreRenderControlSystem>' requested here
+          __a.destroy(__p);
+              ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:528:28: note: in instantiation of function template specialization 'std::allocator_traits<std::allocator<ScoreRenderControlSystem>>::destroy<ScoreRenderControlSystem>' requested here
+        allocator_traits<_Alloc>::destroy(_M_impl._M_alloc(), _M_ptr());
+                                  ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:514:2: note: in instantiation of member function 'std::_Sp_counted_ptr_inplace<ScoreRenderControlSystem, std::allocator<ScoreRenderControlSystem>, __gnu_cxx::_S_atomic>::_M_dispose' requested here
+        _Sp_counted_ptr_inplace(_Alloc __a, _Args&&... __args)
+        ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:651:6: note: in instantiation of function template specialization 'std::_Sp_counted_ptr_inplace<ScoreRenderControlSystem, std::allocator<ScoreRenderControlSystem>, __gnu_cxx::_S_atomic>::_Sp_counted_ptr_inplace<>' requested here
+            _Sp_cp_type(__a._M_a, std::forward<_Args>(__args)...);
+            ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:1342:14: note: in instantiation of function template specialization 'std::__shared_count<__gnu_cxx::_S_atomic>::__shared_count<ScoreRenderControlSystem, std::allocator<ScoreRenderControlSystem>>' requested here
+        : _M_ptr(), _M_refcount(_M_ptr, __tag, std::forward<_Args>(__args)...)
+                    ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:409:4: note: in instantiation of function template specialization 'std::__shared_ptr<ScoreRenderControlSystem, __gnu_cxx::_S_atomic>::__shared_ptr<std::allocator<ScoreRenderControlSystem>>' requested here
+        : __shared_ptr<_Tp>(__tag, std::forward<_Args>(__args)...)
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:862:14: note: in instantiation of function template specialization 'std::shared_ptr<ScoreRenderControlSystem>::shared_ptr<std::allocator<ScoreRenderControlSystem>>' requested here
+      return shared_ptr<_Tp>(_Sp_alloc_shared_tag<_Alloc>{__a},
+             ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:878:19: note: in instantiation of function template specialization 'std::allocate_shared<ScoreRenderControlSystem, std::allocator<ScoreRenderControlSystem>>' requested here
+      return std::allocate_shared<_Tp>(std::allocator<_Tp_nc>(),
+                  ^
+../include/Definitions.h:169:36: note: in instantiation of function template specialization 'std::make_shared<ScoreRenderControlSystem>' requested here
+        const auto make_shared_ptr = std::make_shared<T>;
+                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:37:10: note: in instantiation of function template specialization 'core::Engine::use<ScoreRenderControlSystem>' requested here
+                engine.use<ScoreRenderControlSystem>();
+                       ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:10: note: qualify call to silence this warning
+        { __p->~_Up(); }
+                ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:4: warning: destructor called on non-final 'TimeRenderControlSystem' that has virtual functions but non-virtual destructor [clang-diagnostic-delete-non-abstract-non-virtual-dtor]
+        { __p->~_Up(); }
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/alloc_traits.h:535:8: note: in instantiation of function template specialization '__gnu_cxx::new_allocator<TimeRenderControlSystem>::destroy<TimeRenderControlSystem>' requested here
+          __a.destroy(__p);
+              ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:528:28: note: in instantiation of function template specialization 'std::allocator_traits<std::allocator<TimeRenderControlSystem>>::destroy<TimeRenderControlSystem>' requested here
+        allocator_traits<_Alloc>::destroy(_M_impl._M_alloc(), _M_ptr());
+                                  ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:514:2: note: in instantiation of member function 'std::_Sp_counted_ptr_inplace<TimeRenderControlSystem, std::allocator<TimeRenderControlSystem>, __gnu_cxx::_S_atomic>::_M_dispose' requested here
+        _Sp_counted_ptr_inplace(_Alloc __a, _Args&&... __args)
+        ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:651:6: note: in instantiation of function template specialization 'std::_Sp_counted_ptr_inplace<TimeRenderControlSystem, std::allocator<TimeRenderControlSystem>, __gnu_cxx::_S_atomic>::_Sp_counted_ptr_inplace<>' requested here
+            _Sp_cp_type(__a._M_a, std::forward<_Args>(__args)...);
+            ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr_base.h:1342:14: note: in instantiation of function template specialization 'std::__shared_count<__gnu_cxx::_S_atomic>::__shared_count<TimeRenderControlSystem, std::allocator<TimeRenderControlSystem>>' requested here
+        : _M_ptr(), _M_refcount(_M_ptr, __tag, std::forward<_Args>(__args)...)
+                    ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:409:4: note: in instantiation of function template specialization 'std::__shared_ptr<TimeRenderControlSystem, __gnu_cxx::_S_atomic>::__shared_ptr<std::allocator<TimeRenderControlSystem>>' requested here
+        : __shared_ptr<_Tp>(__tag, std::forward<_Args>(__args)...)
+          ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:862:14: note: in instantiation of function template specialization 'std::shared_ptr<TimeRenderControlSystem>::shared_ptr<std::allocator<TimeRenderControlSystem>>' requested here
+      return shared_ptr<_Tp>(_Sp_alloc_shared_tag<_Alloc>{__a},
+             ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/bits/shared_ptr.h:878:19: note: in instantiation of function template specialization 'std::allocate_shared<TimeRenderControlSystem, std::allocator<TimeRenderControlSystem>>' requested here
+      return std::allocate_shared<_Tp>(std::allocator<_Tp_nc>(),
+                  ^
+../include/Definitions.h:169:36: note: in instantiation of function template specialization 'std::make_shared<TimeRenderControlSystem>' requested here
+        const auto make_shared_ptr = std::make_shared<T>;
+                                          ^
+/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/../src/Main.cpp:36:10: note: in instantiation of function template specialization 'core::Engine::use<TimeRenderControlSystem>' requested here
+                engine.use<TimeRenderControlSystem>();
+                       ^
+/../lib/gcc/x86_64-linux-gnu/11/../../../../include/c++/11/ext/new_allocator.h:168:10: note: qualify call to silence this warning
+        { __p->~_Up(); }
+                ^
+Suppressed 1103135 warnings (1103135 in non-user code).
+Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

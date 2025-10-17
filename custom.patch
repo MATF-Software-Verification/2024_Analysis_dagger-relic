@@ -11,6 +11,60 @@ index d2cb0cb..05399c5 100644
 +    "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild"
  }
 \ No newline at end of file
+diff --git a/include/DamageSystem.h b/include/DamageSystem.h
+index d130872..07057ec 100644
+--- a/include/DamageSystem.h
++++ b/include/DamageSystem.h
+@@ -33,16 +33,16 @@ class DamageSystem : public ecs::System,
+         {
+             
+             auto size = MutAccessStorage<Player>::access_storage().size();
+-            Logger::info("Number of players: {}", size);
++            // Logger::info("Number of players: {}", size);
+             if(size == 0)
+             {
+                 return;
+             }
+             
+             auto& health_to = MutAccessComponentById<Health>::get(to);
+-            Logger::info("Health before damage: {} -> {}", (int)to, health_to.health);
++            // Logger::info("Health before damage: {} -> {}", (int)to, health_to.health);
+             health_to.health -=  damage; 
+-            Logger::info("Health after damage: {} -> {}", (int)to, health_to.health);
++            // Logger::info("Health after damage: {} -> {}", (int)to, health_to.health);
+ 
+             if(health_to.health <= 0)
+             { 
+@@ -57,7 +57,7 @@ class DamageSystem : public ecs::System,
+                     emit(GameEndSignal{});
+                 }
+                 despawn(to);
+-                Logger::info("Current score: {}", score);
++                // Logger::info("Current score: {}", score);
+             }
+            
+         }
+diff --git a/include/FSM.h b/include/FSM.h
+index 395cd9e..154e74f 100644
+--- a/include/FSM.h
++++ b/include/FSM.h
+@@ -37,14 +37,14 @@ public:
+     {
+         transitions[state] = containers::Map<Transition, State>();
+         transition_with_actions[state] = containers::Map<Transition, Action>();
+-        Logger::info("Added state {}", state);
++        // Logger::info("Added state {}", state);
+     }
+ 
+     void define_transitions(State from, Transition tr, Action act, State to)
+     {
+         transitions[from][tr] = to;
+         transition_with_actions[from][tr] = act;
+-        Logger::info("Added transition {} ---{}/{}--> {}", from, tr, act, to);
++        // Logger::info("Added transition {} ---    {}/{}--> {}", from, tr, act, to);
+     }
+ 
+     void define_action(Action action)
 diff --git a/include/Lifecycle.h b/include/Lifecycle.h
 index 4d37fa6..cfdfc00 100644
 --- a/include/Lifecycle.h
@@ -25,7 +79,7 @@ index 4d37fa6..cfdfc00 100644
  		virtual void on_tick() {};
  		virtual void on_end() {};
 diff --git a/include/Loaders.h b/include/Loaders.h
-index de1826d..0332ce9 100644
+index de1826d..a9fa87f 100644
 --- a/include/Loaders.h
 +++ b/include/Loaders.h
 @@ -13,7 +13,7 @@ class TextureLoader
@@ -33,10 +87,53 @@ index de1826d..0332ce9 100644
  	, public SignalEmitter<core::AssetUnloadingSignal<Texture>>
  {
 -	memory::RawPtr<Texture> load_texture(String);
-+	memory::RawPtr<Texture> load_texture(const String&);
++	std::unique_ptr<Texture> load_texture(const String&);
  	String get_default_asset_name() const override;
  	void load_assets() override;
  	ecs::Entity load_asset(String texture_name, String texture_path) override;
+diff --git a/include/ScoreRender.h b/include/ScoreRender.h
+index a265695..6927d51 100644
+--- a/include/ScoreRender.h
++++ b/include/ScoreRender.h
+@@ -12,6 +12,10 @@ struct ScoreRender
+ 	U32 font_size;
+ 	SDL_Color text_color = {0, 0, 0};
+ 	ScoreRender(String text, U32 font_size);
++	~ScoreRender();
++	ScoreRender(const ScoreRender&) = delete;
++	ScoreRender& operator=(const ScoreRender&) = delete;
++
+ 
+ 	static void init();
+ 	static void deinit();
+diff --git a/include/SpriteRendering.h b/include/SpriteRendering.h
+index 20bb990..44707d2 100644
+--- a/include/SpriteRendering.h
++++ b/include/SpriteRendering.h
+@@ -16,7 +16,7 @@ enum Flip
+ struct Sprite
+ {
+ 	ecs::Entity texture;
+-	I32 depth;
++	I32 depth = 0;
+ 	geometry::Rect clip;
+ 	geometry::Vec2 pivot{ 0.5f, 0.5f };
+ };
+diff --git a/include/TimeRender.h b/include/TimeRender.h
+index 1c2d470..3cdc437 100644
+--- a/include/TimeRender.h
++++ b/include/TimeRender.h
+@@ -12,6 +12,10 @@ struct TimeRender
+ 	U32 font_size;
+ 	SDL_Color text_color = {0, 0, 0};
+ 	TimeRender(String text, U32 font_size);
++	~TimeRender();
++
++	TimeRender(const TimeRender&) = delete;
++    TimeRender& operator=(const TimeRender&) = delete;
+ 
+ 	static void init();
+ 	static void deinit();
 diff --git a/src/Animations.cpp b/src/Animations.cpp
 index 8197f07..20739b1 100644
 --- a/src/Animations.cpp
@@ -55,7 +152,7 @@ index 8197f07..20739b1 100644
  	spritesheet = current;
  	current_frame = 0;
 diff --git a/src/Config.cpp b/src/Config.cpp
-index e8c0095..632173e 100644
+index e8c0095..b4aed86 100644
 --- a/src/Config.cpp
 +++ b/src/Config.cpp
 @@ -13,7 +13,7 @@ Config read_ini_file(RawString name)
@@ -67,6 +164,33 @@ index e8c0095..632173e 100644
  	{
  		auto const& category = it.first;
  		auto const& collection = it.second;
+@@ -21,7 +21,7 @@ Config load_config_from_ini_file(RawString fileName)
+ 		{
+ 			auto const& token = it2.first;
+ 			auto const& value = it2.second;
+-			Logger::info("Config loaded: {}.{} = {}", category, token, value);
++			// Logger::info("Config loaded: {}.{} = {}", category, token, value);
+ 		}
+ 	}
+ 
+@@ -30,7 +30,7 @@ Config load_config_from_ini_file(RawString fileName)
+ 
+ Config override_config_with_command_line(Config get_config, Size argumentCount, RawString arguments[])
+ {
+-	Logger::info("Config loaded: dagger.path = {}", arguments[0]);
++	// Logger::info("Config loaded: dagger.path = {}", arguments[0]);
+ 	get_config["dagger"]["path"] = arguments[0];
+ 
+ 	for (int i = 1; i < argumentCount; i++)
+@@ -64,7 +64,7 @@ Config override_config_with_command_line(Config get_config, Size argumentCount,
+ 			token.erase(0, delimiter + 1);
+ 		}
+ 
+-		Logger::info("Config override: {}.{} = {}", category, token, value);
++		// Logger::info("Config override: {}.{} = {}", category, token, value);
+ 		get_config[category][token] = value;
+ 	}
+ 
 diff --git a/src/EventBus.cpp b/src/EventBus.cpp
 index 35753a2..07458ee 100644
 --- a/src/EventBus.cpp
@@ -83,19 +207,36 @@ index 35753a2..07458ee 100644
  
  	auto& mouse_state = MutAccessUnique<MouseState>::access_unique();
 diff --git a/src/Loaders.cpp b/src/Loaders.cpp
-index db41123..aa4bf75 100644
+index db41123..0a9fcd7 100644
 --- a/src/Loaders.cpp
 +++ b/src/Loaders.cpp
-@@ -23,7 +23,7 @@ TextureLoader::TextureLoader()
+@@ -23,18 +23,16 @@ TextureLoader::TextureLoader()
  {
  }
  
 -memory::RawPtr<Texture> TextureLoader::load_texture(String path)
-+memory::RawPtr<Texture> TextureLoader::load_texture(const String& path)
++std::unique_ptr<Texture> TextureLoader::load_texture(const String& path)
  {
- 	auto& state = MutAccessUnique<core::WindowingState>::access_unique();
- 	auto* texture = new Texture();
-@@ -101,7 +101,7 @@ void TextureLoader::load_assets()
+-	auto& state = MutAccessUnique<core::WindowingState>::access_unique();
+-	auto* texture = new Texture();
++    auto& state = MutAccessUnique<core::WindowingState>::access_unique();
++    auto texture = std::make_unique<Texture>();
+ 
+-	auto* surface = IMG_Load(path.c_str());
+-	texture->inner = SDL_CreateTextureFromSurface(state.renderer, surface);
+-	SDL_FreeSurface(surface);
++    auto* surface = IMG_Load(path.c_str());
++    texture->inner = SDL_CreateTextureFromSurface(state.renderer, surface);
++    SDL_FreeSurface(surface);
+ 
+-	Logger::info("Loading complete");
+-
+-	return texture;
++    return texture;
+ }
+ 
+ String TextureLoader::get_default_asset_name() const
+@@ -101,7 +99,7 @@ void TextureLoader::load_assets()
  		name_paths.insert({ name, path });
  	}
  
@@ -104,7 +245,7 @@ index db41123..aa4bf75 100644
  	{
  		if (std::find(entries.begin(), entries.end(), loaded.first) == entries.end())
  		{
-@@ -112,7 +112,7 @@ void TextureLoader::load_assets()
+@@ -112,7 +110,7 @@ void TextureLoader::load_assets()
  		to_remove.push_back(loaded.first);
  	}
  
@@ -113,7 +254,7 @@ index db41123..aa4bf75 100644
  	{
  		loaded_entity_mapping.erase(del);
  	}
-@@ -208,7 +208,7 @@ void read_line(std::ifstream& input)
+@@ -208,7 +206,7 @@ void read_line(std::ifstream& input)
  	std::getline(input, line);
  }
  
@@ -122,7 +263,7 @@ index db41123..aa4bf75 100644
  {
  	auto split = line.find(":");
  	auto first = trim_copy(line.substr(0, split));
-@@ -217,7 +217,7 @@ std::tuple<String, String> read_tuple(std::string line)
+@@ -217,7 +215,7 @@ std::tuple<String, String> read_tuple(std::string line)
  	return { first, second };
  }
  
@@ -131,7 +272,7 @@ index db41123..aa4bf75 100644
  {
  	String line;
  
-@@ -234,35 +234,35 @@ std::optional<String> read_pair(std::ifstream& input, std::string key)
+@@ -234,35 +232,35 @@ std::optional<String> read_pair(std::ifstream& input, std::string key)
  	}
  }
  
@@ -172,7 +313,7 @@ index db41123..aa4bf75 100644
  {
  	float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
  	sscanf(str.c_str(), "%f, %f, %f, %f", &a, &b, &c, &d);
-@@ -286,7 +286,7 @@ void SpritesheetLoader::load_assets()
+@@ -286,7 +284,7 @@ void SpritesheetLoader::load_assets()
  	}
  	entry.close();
  
@@ -181,7 +322,7 @@ index db41123..aa4bf75 100644
  	{
  		if (std::find(entries.begin(), entries.end(), loaded.first) == entries.end())
  		{
-@@ -297,7 +297,7 @@ void SpritesheetLoader::load_assets()
+@@ -297,7 +295,7 @@ void SpritesheetLoader::load_assets()
  		to_remove.push_back(loaded.first);
  	}
  
@@ -354,12 +495,20 @@ index 201ac93..6e5c295 100644
  			.done();
  		// spawn()
 diff --git a/src/ScoreRender.cpp b/src/ScoreRender.cpp
-index 187892e..26ed7b9 100644
+index 187892e..802420b 100644
 --- a/src/ScoreRender.cpp
 +++ b/src/ScoreRender.cpp
-@@ -3,7 +3,7 @@
+@@ -2,8 +2,15 @@
+ #include "ScoreRender.h"
  #include <iostream>
  
++ScoreRender::~ScoreRender() {
++    if (font) {
++        TTF_CloseFont(font);
++        font = nullptr;
++    }
++}
++
  ScoreRender::ScoreRender(String text, U32 font_size)
 -    : text(text), font_size(font_size)
 +    : text(std::move(text)), font_size(font_size)
@@ -405,7 +554,7 @@ index 271981e..0c15e9a 100644
  	}
  }
 diff --git a/src/TimeRender.cpp b/src/TimeRender.cpp
-index 7b9c662..7479a16 100644
+index 7b9c662..d4894fc 100644
 --- a/src/TimeRender.cpp
 +++ b/src/TimeRender.cpp
 @@ -3,8 +3,7 @@
@@ -418,8 +567,16 @@ index 7b9c662..7479a16 100644
  
  auto start = std::chrono::high_resolution_clock::now(); // get current time
  int elapsed_time_ms = 0;
-@@ -14,7 +13,7 @@ int numSpawnedEnemies = 1;
+@@ -12,9 +11,15 @@ bool hasSpawnEnemies = false;
+ int num;
+ int numSpawnedEnemies = 1;
  
++TimeRender::~TimeRender() {
++	if (font) {
++		TTF_CloseFont(font);
++		font = nullptr;
++	}
++}
  
  TimeRender::TimeRender(String text, U32 font_size)
 -	: text(text), font_size(font_size)
@@ -427,7 +584,7 @@ index 7b9c662..7479a16 100644
  {
  	font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
  
-@@ -47,7 +46,7 @@ void TimeRenderControlSystem::on_tick()
+@@ -47,7 +52,7 @@ void TimeRenderControlSystem::on_tick()
  
  	for (auto &&[entity, time_render, position, sprite] : access_storage().each())
  	{
@@ -436,7 +593,7 @@ index 7b9c662..7479a16 100644
  		if (!time_render.font)
  		{
  			continue;
-@@ -64,13 +63,13 @@ void TimeRenderControlSystem::on_tick()
+@@ -64,13 +69,13 @@ void TimeRenderControlSystem::on_tick()
  
  		if ((seconds + 5) % 10 == 0)
  		{
@@ -452,7 +609,7 @@ index 7b9c662..7479a16 100644
  
  			if (!hasSpawnEnemies)
  			{
-@@ -80,13 +79,13 @@ void TimeRenderControlSystem::on_tick()
+@@ -80,13 +85,13 @@ void TimeRenderControlSystem::on_tick()
  					num = rand() % RANGE_X;
  					auto enemy2 = spawn()
  									  .with<Sprite>(ecs::no_entity)
@@ -465,11 +622,11 @@ index 7b9c662..7479a16 100644
 -									  .with<AnimationSpeedController>(15.0f)
 -									  .with<Enemy>(geometry::Vec2{1, 0}, 90.0f)
 +									  .with<AnimationSpeedController>(ENTITY_ANIMATION_SPEED)
-+									  .with<Enemy>(ENTITY_SPEED_VECTOR, ENEMY_MOVEMENT_SPEED)
++									  .with<Enemy>(ENTITY_SPEED_VECTOR, 90.0f)
  
  									  .done();
  
-@@ -96,13 +95,13 @@ void TimeRenderControlSystem::on_tick()
+@@ -96,13 +101,13 @@ void TimeRenderControlSystem::on_tick()
  					num = rand() % RANGE_X;
  					auto enemy3 = spawn()
  									  .with<Sprite>(ecs::no_entity)
@@ -486,7 +643,7 @@ index 7b9c662..7479a16 100644
  									  .done();
  
  					add_component<EnemyFSMController>(enemy3, enemy3);
-@@ -110,13 +109,13 @@ void TimeRenderControlSystem::on_tick()
+@@ -110,13 +115,13 @@ void TimeRenderControlSystem::on_tick()
  					num = rand() % RANGE_Y;
  					auto enemy4 = spawn()
  									  .with<Sprite>(ecs::no_entity)
@@ -503,7 +660,7 @@ index 7b9c662..7479a16 100644
  									  .done();
  
  					add_component<EnemyFSMController>(enemy4, enemy4);
-@@ -129,8 +128,8 @@ void TimeRenderControlSystem::on_tick()
+@@ -129,8 +134,8 @@ void TimeRenderControlSystem::on_tick()
  									  .with<Position>(geometry::Vec2{800, num})
  									  .with<Visibility>(true)
  									  .with<Flip>(None)
@@ -514,3 +671,36 @@ index 7b9c662..7479a16 100644
  									  .done();
  
  					add_component<EnemyFSMController>(enemy5, enemy5);
+diff --git a/src/Windowing.cpp b/src/Windowing.cpp
+index ab2d6bf..54a554c 100644
+--- a/src/Windowing.cpp
++++ b/src/Windowing.cpp
+@@ -38,7 +38,7 @@ bool WindowingModule::on_start()
+ 	SDL_GetWindowSize(state.window, &w, &h);
+ 	SignalEmitter<WindowResizedSignal>::emit(WindowResizedSignal{ (U32)w, (U32)h });
+ 
+-	Logger::info("Backend initialized correctly.");
++	// Logger::info("Backend initialized correctly.");
+ 	return true;
+ }
+ 
+@@ -51,16 +51,16 @@ void WindowingModule::on_end()
+ 	if (state.renderer)
+ 	{
+ 		SDL_DestroyRenderer(state.renderer);
+-		Logger::info("Renderer destroyed successfully.");
++		// Logger::info("Renderer destroyed successfully.");
+ 	}
+ 
+ 	if (state.window)
+ 	{
+ 		SDL_DestroyWindow(state.window);
+-		Logger::info("Window destroyed successfully.");
++		// Logger::info("Window destroyed successfully.");
+ 	}
+ 
+ 	// TODO: SDL_Quit hangs! Issue likely reported: https://github.com/libsdl-org/SDL/issues/4276
+ 	//SDL_Quit();
+-	Logger::info("Quitting.");
++	// Logger::info("Quitting.");
+ }

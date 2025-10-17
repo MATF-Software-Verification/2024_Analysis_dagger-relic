@@ -21,8 +21,15 @@ Uputstva za pokretanje projekta se mogu naći u **README.md** fajlu repozitoriju
         1. Pozicionirati se u `clang-tidy` direktorijum (`cd clang-tidy`),
         2. Dodeliti pravo izvršavanja skripti: `chmod +x run_clang_tidy.sh`,
         3. Pokrenuti skriptu: `./run_clang_tidy.sh`.
+- **memcheck:**
+    - Instalacija alata: `sudo apt install valgrind`
+    - Reprodukcija rezultata:
+        1. Pozicionirati se u `valgrind/memcheck` direktorijum (`cd valgrind/memcheck`),
+        2. Dodeliti pravo izvršavanja skripti: `chmod +x run_memcheck.sh`,
+        3. Pokrenuti skriptu: `./run_memcheck.sh`.
 
 ## Zaključak
 
 Pokretanjem alata **clang-tidy** otkriven je veliki broj stilskih propusta, koji uglavnom potiču iz autorovog korišćenja starijeg **C**-olikog stila pri pisanju **C++** projekta, kao i korišćenja velikog broja *magičnih brojeva*. Pored toga, alat je identifikovao i propuste koji mogu uticati na performanse aplikacije, poput bespotrebnog kopiranja i korišćenja kopija promenljivih.
 
+Pokretanjem alata **Valgrind Memcheck** je otkriven problem korišćenja polja objekta pre nego što je inicijalizovano, što dovodi do nedefinisanog ponašanja programa. Osim toga, pronađeno je nekoliko definitivnih curenja memorije, gde su veća curenja produkti nedostatka destruktora `TimeRenderer` i `ScoreRenderer` objekata (pa i oslobađanja njihovih dinamički alociranih polja), dok se manje curenje zasnivalno na nedostatku oslobađanja pokazivača tekstura.

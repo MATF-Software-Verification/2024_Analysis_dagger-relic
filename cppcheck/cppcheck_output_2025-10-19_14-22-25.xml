@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="2.7"/>
+    <errors>
+        <error id="functionConst" severity="style" msg="Technically the member function &apos;mINI::INIWriter::getLazyOutput&apos; can be const." verbose="The member function &apos;mINI::INIWriter::getLazyOutput&apos; can be made a const function. Making this function &apos;const&apos; should not cause compiler errors. Even though the function can be made const function technically it may not make sense conceptually. Think about your design and the task of the function first - is it a function that must not change object internal state?" cwe="398" inconclusive="true" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Config.h" line="522" column="14"/>
+            <symbol>mINI::INIWriter::getLazyOutput</symbol>
+        </error>
+        <error id="functionStatic" severity="performance" msg="Technically the member function &apos;SignalEmitter::emit&apos; can be static (but you may consider moving to unnamed namespace)." verbose="The member function &apos;SignalEmitter::emit&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances? And maybe it is more appropriate to move this function to a unnamed namespace." cwe="398" inconclusive="true" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Access.h" line="139" column="7"/>
+            <symbol>SignalEmitter::emit</symbol>
+        </error>
+        <error id="functionStatic" severity="performance" msg="Technically the member function &apos;EntitySpawner::spawn&apos; can be static (but you may consider moving to unnamed namespace)." verbose="The member function &apos;EntitySpawner::spawn&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances? And maybe it is more appropriate to move this function to a unnamed namespace." cwe="398" inconclusive="true" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Access.h" line="184" column="21"/>
+            <symbol>EntitySpawner::spawn</symbol>
+        </error>
+        <error id="functionStatic" severity="performance" msg="Technically the member function &apos;EntitySpawner::despawn&apos; can be static (but you may consider moving to unnamed namespace)." verbose="The member function &apos;EntitySpawner::despawn&apos; can be made a static function. Making a function static can bring a performance benefit since no &apos;this&apos; instance is passed to the function. This change should not cause compiler errors but it does not necessarily make sense conceptually. Think about your design and the task of the function first - is it a function that must not access members of class instances? And maybe it is more appropriate to move this function to a unnamed namespace." cwe="398" inconclusive="true" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Access.h" line="189" column="7"/>
+            <symbol>EntitySpawner::despawn</symbol>
+        </error>
+        <error id="pureVirtualCall" severity="warning" msg="Call of pure virtual function &apos;process_signal&apos; in constructor." verbose="Call of pure virtual function &apos;process_signal&apos; in constructor. The call will fail during runtime." file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Access.h" line="148" column="15" info="process_signal is a pure virtual function without body"/>
+            <location file="../dagger-relic/include/Access.h" line="152" column="91" info="Calling process_signal"/>
+            <symbol>process_signal</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Class &apos;INIReader&apos; has a constructor with 1 argument that is not explicit." verbose="Class &apos;INIReader&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Config.h" line="395" column="3"/>
+            <symbol>INIReader</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Class &apos;INIGenerator&apos; has a constructor with 1 argument that is not explicit." verbose="Class &apos;INIGenerator&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Config.h" line="454" column="3"/>
+            <symbol>INIGenerator</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Class &apos;INIWriter&apos; has a constructor with 1 argument that is not explicit." verbose="Class &apos;INIWriter&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Config.h" line="681" column="3"/>
+            <symbol>INIWriter</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Class &apos;INIFile&apos; has a constructor with 1 argument that is not explicit." verbose="Class &apos;INIFile&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Config.h" line="751" column="3"/>
+            <symbol>INIFile</symbol>
+        </error>
+        <error id="noExplicitConstructor" severity="style" msg="Struct &apos;EntitySpawnBuilder&apos; has a constructor with 1 argument that is not explicit." verbose="Struct &apos;EntitySpawnBuilder&apos; has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided." cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Access.h" line="163" column="2"/>
+            <symbol>EntitySpawnBuilder</symbol>
+        </error>
+        <error id="missingOverride" severity="style" msg="The function &apos;on_end&apos; overrides a function in a base class but is not marked with a &apos;override&apos; specifier." verbose="The function &apos;on_end&apos; overrides a function in a base class but is not marked with a &apos;override&apos; specifier." file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Access.h" line="231" column="15" info="Function in derived class"/>
+            <location file="../dagger-relic/include/Lifecycle.h" line="11" column="16" info="Virtual function in base class"/>
+            <symbol>on_end</symbol>
+        </error>
+        <error id="missingOverride" severity="style" msg="The function &apos;process_signal&apos; overrides a function in a base class but is not marked with a &apos;override&apos; specifier." verbose="The function &apos;process_signal&apos; overrides a function in a base class but is not marked with a &apos;override&apos; specifier." file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Engine.cpp" line="10" column="15" info="Function in derived class"/>
+            <location file="../dagger-relic/include/Access.h" line="148" column="15" info="Virtual function in base class"/>
+            <symbol>process_signal</symbol>
+        </error>
+        <error id="missingOverride" severity="style" msg="The function &apos;process_signal&apos; overrides a function in a base class but is not marked with a &apos;override&apos; specifier." verbose="The function &apos;process_signal&apos; overrides a function in a base class but is not marked with a &apos;override&apos; specifier." file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Engine.cpp" line="11" column="15" info="Function in derived class"/>
+            <location file="../dagger-relic/include/Access.h" line="148" column="15" info="Virtual function in base class"/>
+            <symbol>process_signal</symbol>
+        </error>
+        <error id="constParameter" severity="style" msg="Parameter &apos;original&apos; can be declared with const" verbose="Parameter &apos;original&apos; can be declared with const" cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Config.h" line="522" column="93" info="Parameter &apos;original&apos; can be declared with const"/>
+            <symbol>original</symbol>
+        </error>
+        <error id="constParameter" severity="style" msg="Parameter &apos;data&apos; can be declared with const" verbose="Parameter &apos;data&apos; can be declared with const" cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Config.h" line="780" column="28" info="Parameter &apos;data&apos; can be declared with const"/>
+            <symbol>data</symbol>
+        </error>
+        <error id="constParameter" severity="style" msg="Parameter &apos;t&apos; can be declared with const" verbose="Parameter &apos;t&apos; can be declared with const" cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Definitions.h" line="118" column="20" info="Parameter &apos;t&apos; can be declared with const"/>
+            <symbol>t</symbol>
+        </error>
+        <error id="redundantInitialization" severity="style" msg="Redundant initialization for &apos;token&apos;. The initialized value is overwritten before it is read." verbose="Redundant initialization for &apos;token&apos;. The initialized value is overwritten before it is read." cwe="563" file0="../dagger-relic/src/Config.cpp">
+            <location file="../dagger-relic/src/Config.cpp" line="45" column="10" info="token is overwritten"/>
+            <location file="../dagger-relic/src/Config.cpp" line="40" column="16" info="token is initialized"/>
+            <symbol>token</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;category&apos; is assigned a value that is never used." verbose="Variable &apos;category&apos; is assigned a value that is never used." cwe="563" file0="../dagger-relic/src/Config.cpp">
+            <location file="../dagger-relic/src/Config.cpp" line="18" column="24"/>
+            <symbol>category</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;token&apos; is assigned a value that is never used." verbose="Variable &apos;token&apos; is assigned a value that is never used." cwe="563" file0="../dagger-relic/src/Config.cpp">
+            <location file="../dagger-relic/src/Config.cpp" line="22" column="22"/>
+            <symbol>token</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;value&apos; is assigned a value that is never used." verbose="Variable &apos;value&apos; is assigned a value that is never used." cwe="563" file0="../dagger-relic/src/Config.cpp">
+            <location file="../dagger-relic/src/Config.cpp" line="23" column="22"/>
+            <symbol>value</symbol>
+        </error>
+        <error id="knownConditionTrueFalse" severity="style" msg="Condition &apos;loaded!=nullptr&apos; is always true" verbose="Condition &apos;loaded!=nullptr&apos; is always true" cwe="571" file0="../dagger-relic/src/Loaders.cpp">
+            <location file="../dagger-relic/src/Loaders.cpp" line="61" column="13" info="Condition &apos;loaded!=nullptr&apos; is always true"/>
+        </error>
+        <error id="variableScope" severity="style" msg="The scope of the variable &apos;registry&apos; can be reduced." verbose="The scope of the variable &apos;registry&apos; can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for &apos;i&apos; can be reduced:\012void f(int x)\012{\012    int i = 0;\012    if (x) {\012        // it&apos;s safe to move &apos;int i = 0;&apos; here\012        for (int n = 0; n &lt; 10; ++n) {\012            // it is possible but not safe to move &apos;int i = 0;&apos; here\012            do_something(&amp;i);\012        }\012    }\012}\012When you see this message it is always safe to reduce the variable scope 1 level." cwe="398" file0="../dagger-relic/src/Loaders.cpp">
+            <location file="../dagger-relic/src/Loaders.cpp" line="45" column="8"/>
+            <symbol>registry</symbol>
+        </error>
+        <error id="shadowVariable" severity="style" msg="Local variable &apos;name&apos; shadows outer variable" verbose="Local variable &apos;name&apos; shadows outer variable" cwe="398" file0="../dagger-relic/src/Loaders.cpp">
+            <location file="../dagger-relic/src/Loaders.cpp" line="118" column="15" info="Shadow variable"/>
+            <location file="../dagger-relic/src/Loaders.cpp" line="93" column="9" info="Shadowed declaration"/>
+            <symbol>name</symbol>
+        </error>
+        <error id="shadowVariable" severity="style" msg="Local variable &apos;path&apos; shadows outer variable" verbose="Local variable &apos;path&apos; shadows outer variable" cwe="398" file0="../dagger-relic/src/Loaders.cpp">
+            <location file="../dagger-relic/src/Loaders.cpp" line="118" column="21" info="Shadow variable"/>
+            <location file="../dagger-relic/src/Loaders.cpp" line="93" column="15" info="Shadowed declaration"/>
+            <symbol>path</symbol>
+        </error>
+        <error id="unassignedVariable" severity="style" msg="Variable &apos;name&apos; is not assigned a value." verbose="Variable &apos;name&apos; is not assigned a value." cwe="665" file0="../dagger-relic/src/Loaders.cpp">
+            <location file="../dagger-relic/src/Loaders.cpp" line="118" column="15"/>
+            <symbol>name</symbol>
+        </error>
+        <error id="uninitMemberVar" severity="warning" msg="Member variable &apos;Brawl::num&apos; is not initialized in the constructor." verbose="Member variable &apos;Brawl::num&apos; is not initialized in the constructor." cwe="398" file0="../dagger-relic/src/Main.cpp">
+            <location file="../dagger-relic/src/Main.cpp" line="23" column="2"/>
+            <symbol>Brawl::num</symbol>
+        </error>
+        <error id="unusedVariable" severity="style" msg="Unused variable: entity" verbose="Unused variable: entity" cwe="563" file0="../dagger-relic/src/ScoreRender.cpp">
+            <location file="../dagger-relic/src/ScoreRender.cpp" line="49" column="22"/>
+            <symbol>entity</symbol>
+        </error>
+        <error id="unusedVariable" severity="style" msg="Unused variable: entity" verbose="Unused variable: entity" cwe="563" file0="../dagger-relic/src/TimeRender.cpp">
+            <location file="../dagger-relic/src/TimeRender.cpp" line="53" column="15"/>
+            <symbol>entity</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;ltrim_copy&apos; is never used." verbose="The function &apos;ltrim_copy&apos; is never used." cwe="561">
+            <location file="../dagger-relic/src/Loaders.cpp" line="182" column="0"/>
+            <symbol>ltrim_copy</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;read_4floats&apos; is never used." verbose="The function &apos;read_4floats&apos; is never used." cwe="561">
+            <location file="../dagger-relic/src/Loaders.cpp" line="263" column="0"/>
+            <symbol>read_4floats</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;rtrim_copy&apos; is never used." verbose="The function &apos;rtrim_copy&apos; is never used." cwe="561">
+            <location file="../dagger-relic/src/Loaders.cpp" line="189" column="0"/>
+            <symbol>rtrim_copy</symbol>
+        </error>
+        <error id="missingInclude" severity="information" msg="Cppcheck cannot find all the include files (use --check-config for details)" verbose="Cppcheck cannot find all the include files. Cppcheck can check the code without the include files found. But the results will probably be more accurate if all the include files are found. Please check your project&apos;s include directories and add all of them as include directories for Cppcheck. To see what files Cppcheck cannot find use --check-config."/>
+    </errors>
+</results>

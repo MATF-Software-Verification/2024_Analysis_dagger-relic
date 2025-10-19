@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="2.7"/>
+    <errors>
+        <error id="missingOverride" severity="style" msg="The function &apos;on_end&apos; overrides a function in a base class but is not marked with a &apos;override&apos; specifier." verbose="The function &apos;on_end&apos; overrides a function in a base class but is not marked with a &apos;override&apos; specifier." file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Access.h" line="234" column="15" info="Function in derived class"/>
+            <location file="../dagger-relic/include/Lifecycle.h" line="11" column="16" info="Virtual function in base class"/>
+            <symbol>on_end</symbol>
+        </error>
+        <error id="constParameter" severity="style" msg="Parameter &apos;original&apos; can be declared with const" verbose="Parameter &apos;original&apos; can be declared with const" cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Config.h" line="522" column="93" info="Parameter &apos;original&apos; can be declared with const"/>
+            <symbol>original</symbol>
+        </error>
+        <error id="constParameter" severity="style" msg="Parameter &apos;data&apos; can be declared with const" verbose="Parameter &apos;data&apos; can be declared with const" cwe="398" file0="../dagger-relic/include/Engine.cpp">
+            <location file="../dagger-relic/include/Config.h" line="780" column="28" info="Parameter &apos;data&apos; can be declared with const"/>
+            <symbol>data</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;category&apos; is assigned a value that is never used." verbose="Variable &apos;category&apos; is assigned a value that is never used." cwe="563" file0="../dagger-relic/src/Config.cpp">
+            <location file="../dagger-relic/src/Config.cpp" line="18" column="24"/>
+            <symbol>category</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;token&apos; is assigned a value that is never used." verbose="Variable &apos;token&apos; is assigned a value that is never used." cwe="563" file0="../dagger-relic/src/Config.cpp">
+            <location file="../dagger-relic/src/Config.cpp" line="22" column="22"/>
+            <symbol>token</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;value&apos; is assigned a value that is never used." verbose="Variable &apos;value&apos; is assigned a value that is never used." cwe="563" file0="../dagger-relic/src/Config.cpp">
+            <location file="../dagger-relic/src/Config.cpp" line="23" column="22"/>
+            <symbol>value</symbol>
+        </error>
+        <error id="unassignedVariable" severity="style" msg="Variable &apos;t_name&apos; is not assigned a value." verbose="Variable &apos;t_name&apos; is not assigned a value." cwe="665" file0="../dagger-relic/src/Loaders.cpp">
+            <location file="../dagger-relic/src/Loaders.cpp" line="115" column="15"/>
+            <symbol>t_name</symbol>
+        </error>
+        <error id="unusedVariable" severity="style" msg="Unused variable: _" verbose="Unused variable: _" cwe="563" file0="../dagger-relic/src/ScoreRender.cpp">
+            <location file="../dagger-relic/src/ScoreRender.cpp" line="49" column="22"/>
+            <symbol>_</symbol>
+        </error>
+        <error id="unusedVariable" severity="style" msg="Unused variable: _" verbose="Unused variable: _" cwe="563" file0="../dagger-relic/src/TimeRender.cpp">
+            <location file="../dagger-relic/src/TimeRender.cpp" line="53" column="15"/>
+            <symbol>_</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;ltrim_copy&apos; is never used." verbose="The function &apos;ltrim_copy&apos; is never used." cwe="561">
+            <location file="../dagger-relic/src/Loaders.cpp" line="179" column="0"/>
+            <symbol>ltrim_copy</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;read_4floats&apos; is never used." verbose="The function &apos;read_4floats&apos; is never used." cwe="561">
+            <location file="../dagger-relic/src/Loaders.cpp" line="260" column="0"/>
+            <symbol>read_4floats</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;rtrim_copy&apos; is never used." verbose="The function &apos;rtrim_copy&apos; is never used." cwe="561">
+            <location file="../dagger-relic/src/Loaders.cpp" line="186" column="0"/>
+            <symbol>rtrim_copy</symbol>
+        </error>
+        <error id="missingInclude" severity="information" msg="Cppcheck cannot find all the include files (use --check-config for details)" verbose="Cppcheck cannot find all the include files. Cppcheck can check the code without the include files found. But the results will probably be more accurate if all the include files are found. Please check your project&apos;s include directories and add all of them as include directories for Cppcheck. To see what files Cppcheck cannot find use --check-config."/>
+    </errors>
+</results>

@@ -15,7 +15,7 @@ Heš kod analiziranog komita: `5495397`
 Uputstva za pokretanje projekta se mogu naći u **README.md** fajlu repozitorijuma projekta.
 
 ## Korišćeni alati
-- **clang-tidy**:
+- **clang-tidy**
     - Instalacija alata: `sudo apt install clang-tidy`
     - Reprodukcija rezultata:
         1. Pozicionirati se u `clang-tidy` direktorijum (`cd clang-tidy`),
@@ -35,6 +35,14 @@ Uputstva za pokretanje projekta se mogu naći u **README.md** fajlu repozitoriju
         2. Dodeliti pravo izvršavanja skripti: `chmod +x run_massif.sh`,
         3. Pokrenuti skriptu: `./run_massif.sh`,
         4. Parsirati generisani izveštaj sa `ms_print <izveštaj>` ili `massif-visualizer <izveštaj>`.
+- **cppcheck**
+    - Instalacija alata: `sudo apt install cppcheck`
+    - Opciona instalacija pomoćnog alata za parsiranje rezultata: `sudo apt install cppcheck-gui`
+    - Reprodukcija rezultata:
+        1. Pozicionirati se u `cppcheck` direktorijum (`cd cppcheck`),
+        2. Dodeliti pravo izvršavanja skripti: `chmod +x run_cppcheck.sh`,
+        3. Pokrenuti skriptu: `./run_cppcheck.sh`,
+        4. Parsirati generisani izveštaj ručno ili sa `cppcheck-gui <izveštaj>`.
 
 ## Zaključak
 
@@ -44,3 +52,4 @@ Pokretanjem alata **Valgrind Memcheck** je otkriven problem korišćenja polja o
 
 Pokretanjem alata **Valgrind Massif** je analizirana upotreba hipa tokom izvršavanja programa. Zaključeno je za najveći deo upotrebe hipa zasluženo učitavanje tekstura, koje se radi *odjednom*. Kako aplikacija odmah po učitavanju tekstura koristi sve teksture, nema potrebe za ručnim učitavanjem tekstura onda kada su potrebne (što bi predstavljalo optimizaciju u slučajevima gde se ne koriste sve teksture u isto vreme). Zauzeće hip memorije je takođe povećano više nego potrebno zbog odabira opcije `SDL_INIT_EVERYTHING` pri inicijalizovanju **SDL** biblioteke/sistema, jer time automatski inicijalizujemo i podsisteme koje ne koristimo u našoj aplikaciji (kao podrška za zvuk ili džojstik kontrolere).
 
+Pokretanjem alata **cppcheck** je pronađeno par grešaka koje mogu dovesti do nedefinisanog ponašanja pri pokretanju aplikacije, kao što su ne-inicijalizovano polje objekta klase i kao i pozivanje čiste virtuelne metode u konstruktoru klase. Detektovano je i par grešaka koje bi mogle da utiču na performanse aplikacije, koje se odnose na *funkcionalno* statičke metode koje su definisane kao instancne metode klasa, kao i inicijalizovanje objektnih promenljivih u delovima koda gde one možda neće biti korišćene.

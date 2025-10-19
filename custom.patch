@@ -1,5 +1,5 @@
 diff --git a/.vscode/settings.json b/.vscode/settings.json
-index d2cb0cb..382f993 100644
+index d2cb0cb..f50ef36 100644
 --- a/.vscode/settings.json
 +++ b/.vscode/settings.json
 @@ -74,8 +74,10 @@
@@ -12,7 +12,7 @@ index d2cb0cb..382f993 100644
      },
      "mesonbuild.configureOnOpen": false,
 -    "C_Cpp.default.compileCommands": "builddir/vscode_compile_commands.json"
-+    "C_Cpp.default.compileCommands": "builddir/vscode_compile_commands.json",
++    "C_Cpp.default.compileCommands": "/home/jormundur/Jovan/VS/2024_Analysis_dagger-relic/dagger-relic/builddir/compile_commands.json",
 +    "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild"
  }
 \ No newline at end of file
@@ -244,6 +244,162 @@ index fdd6a4d..07cbf1e 100644
 -healthbar/healthbar_9 healthbar/healthbar_9.png
 \ No newline at end of file
 +healthbar/healthbar_9 healthbar/healthbar_9.png
+diff --git a/include/Access.h b/include/Access.h
+index 7e81d49..b154178 100644
+--- a/include/Access.h
++++ b/include/Access.h
+@@ -136,21 +136,24 @@ struct MutAccessGroupStorage : public AccessTrait
+ template<typename T>
+ struct SignalEmitter : public AccessTrait
+ {
+-	void emit(const T& signal) const
++	static void emit(const T& signal)																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		
+ 	{
+ 		core::Engine::get_instance().dispatcher.trigger(signal);
+ 	}
+ };
+ 
+-template<typename T>
++template<typename T>                                                                                                                        
+ struct SignalProcessor : public AccessTrait
+ {
+-	virtual void process_signal(T& signal) = 0;
++    virtual void process_signal(T& signal) = 0;
+ 
+-	SignalProcessor()
+-	{
+-		core::Engine::get_instance().dispatcher.sink<T>().template connect<&SignalProcessor<T>::process_signal>(this);
+-	}
++    SignalProcessor() = default;
++
++    void init_signals()
++    {
++        core::Engine::get_instance().dispatcher.sink<T>()
++            .template connect<&SignalProcessor<T>::process_signal>(this);
++    }
+ };
+ 
+ struct [[nodiscard]] EntitySpawnBuilder
+@@ -160,7 +163,7 @@ struct [[nodiscard]] EntitySpawnBuilder
+ private:
+ 	ecs::Entity entity;
+ 
+-	EntitySpawnBuilder(ecs::Entity entity)
++	explicit EntitySpawnBuilder(ecs::Entity entity)
+ 		: entity{entity}
+ 	{}
+ 
+@@ -181,12 +184,12 @@ public:
+ 
+ struct EntitySpawner : public AccessTrait
+ {
+-	EntitySpawnBuilder spawn() const
++	static EntitySpawnBuilder spawn()
+ 	{
+ 		return EntitySpawnBuilder{ core::Engine::get_instance().registry.create() };
+ 	}
+ 
+-	void despawn(ecs::Entity entity) const
++	static void despawn(ecs::Entity entity)
+ 	{
+ 		core::Engine::get_instance().registry.destroy(entity);
+ 	}
+@@ -230,6 +233,11 @@ struct Game
+ 	virtual void on_start() {};
+ 	virtual void on_end() {};
+ 
++	Game() {
++        SignalProcessor<core::GameStartSignal>::init_signals();
++        SignalProcessor<core::GameEndSignal>::init_signals();
++    }
++
+ 	void process_signal(core::GameStartSignal&) override
+ 	{
+ 		on_start();
+diff --git a/include/Assets.h b/include/Assets.h
+index ee3ef81..87af1a0 100644
+--- a/include/Assets.h
++++ b/include/Assets.h
+@@ -32,8 +32,11 @@ namespace core
+ 
+ 	protected:
+ 		Size asset_type_id = 0;
+-	};
+ 
++		AbstractAssetLoader() = default;
++		void init_loader_signals() { init_signals(); }
++	};
++	
+ 	class AssetModule
+ 		: public ecs::System
+ 		, public MutAccessUnique<WindowingState>
+@@ -99,8 +102,7 @@ namespace core
+ 	};
+ 
+ 	template<typename T>
+-	struct AssetLoader
+-		: public AbstractAssetLoader
++	struct AssetLoader : public AbstractAssetLoader
+ 	{
+ 		virtual String get_default_asset_name() const = 0;
+ 
+@@ -126,6 +128,7 @@ namespace core
+ 		AssetLoader()
+ 		{
+ 			asset_type_id = AssetModule::template get_type_id<T>();
++			init_loader_signals();  // safe: derived overrides exist now
+ 		}
+ 	};
+ }
+diff --git a/include/Config.h b/include/Config.h
+index 6bc00c7..4bdc74f 100644
+--- a/include/Config.h
++++ b/include/Config.h
+@@ -392,7 +392,7 @@ namespace mINI
+ 		}
+ 
+ 	public:
+-		INIReader(std::string const& filename, bool keepLineData = false)
++		explicit INIReader(std::string const& filename, bool keepLineData = false)
+ 		{
+ 			fileReadStream.open(filename, std::ios::in | std::ios::binary);
+ 			if (keepLineData)
+@@ -451,7 +451,7 @@ namespace mINI
+ 	public:
+ 		bool prettyPrint = false;
+ 
+-		INIGenerator(std::string const& filename)
++		explicit INIGenerator(std::string const& filename)
+ 		{
+ 			fileWriteStream.open(filename, std::ios::out | std::ios::binary);
+ 		}
+@@ -519,7 +519,7 @@ namespace mINI
+ 
+ 		std::string filename;
+ 
+-		T_LineData getLazyOutput(T_LineDataPtr const& lineData, INIStructure& data, INIStructure& original)
++		T_LineData getLazyOutput(T_LineDataPtr const& lineData, INIStructure& data, INIStructure& original) const
+ 		{
+ 			T_LineData output;
+ 			INIParser::T_ParseValues parseData;
+@@ -678,7 +678,7 @@ namespace mINI
+ 	public:
+ 		bool prettyPrint = false;
+ 
+-		INIWriter(std::string const& filename)
++		explicit INIWriter(std::string const& filename)
+ 			: filename(filename)
+ 		{
+ 		}
+@@ -748,7 +748,7 @@ namespace mINI
+ 		std::string filename;
+ 
+ 	public:
+-		INIFile(std::string const& filename)
++		explicit INIFile(std::string const& filename)
+ 			: filename(filename)
+ 		{ }
+ 
 diff --git a/include/DamageSystem.h b/include/DamageSystem.h
 index d130872..07057ec 100644
 --- a/include/DamageSystem.h
@@ -277,6 +433,51 @@ index d130872..07057ec 100644
              }
             
          }
+diff --git a/include/Definitions.h b/include/Definitions.h
+index 097ecea..6d928bd 100644
+--- a/include/Definitions.h
++++ b/include/Definitions.h
+@@ -115,7 +115,7 @@ namespace containers
+ 			}
+ 		}
+ 
+-		Bool contains(T& t) const
++		Bool contains(const T& t) const
+ 		{
+ 			for (IndexSize i = 0; i < N; i++)
+ 			{
+diff --git a/include/Diagnostics.h b/include/Diagnostics.h
+index 16016ea..f3fd82a 100644
+--- a/include/Diagnostics.h
++++ b/include/Diagnostics.h
+@@ -13,6 +13,9 @@ class DiagnosticsModule
+ {
+ 
+ public:
++	DiagnosticsModule() {
++        init_signals();
++    }
+ 	const DiagEntry& get_diagnostics(DiagType diagType);
+ 	void set_diagnostics(DiagType diagType, F32 value);
+ 
+diff --git a/include/Engine.cpp b/include/Engine.cpp
+index 2ea7617..9fc6d98 100644
+--- a/include/Engine.cpp
++++ b/include/Engine.cpp
+@@ -7,6 +7,11 @@ struct Game
+ 	, public SignalProcessor<core::GameStartSignal>
+ 	, public SignalProcessor<core::GameEndSignal>
+ {
+-	virtual void process_signal(core::GameStartSignal&) = 0;
+-	virtual void process_signal(core::GameEndSignal&) = 0;
++	Game() {
++        SignalProcessor<core::GameStartSignal>::init_signals();
++        SignalProcessor<core::GameEndSignal>::init_signals();
++    }
++
++	virtual void process_signal(core::GameStartSignal&) override = 0;
++	virtual void process_signal(core::GameEndSignal&) override = 0;
+ };
 diff --git a/include/FSM.h b/include/FSM.h
 index 395cd9e..154e74f 100644
 --- a/include/FSM.h
@@ -340,10 +541,21 @@ index a265695..6927d51 100644
  	static void init();
  	static void deinit();
 diff --git a/include/SpriteRendering.h b/include/SpriteRendering.h
-index 20bb990..44707d2 100644
+index 20bb990..9f5a852 100644
 --- a/include/SpriteRendering.h
 +++ b/include/SpriteRendering.h
-@@ -16,7 +16,7 @@ enum Flip
+@@ -1,8 +1,10 @@
+ #pragma once
+ 
+ #include "Access.h"
++#include "Assets.h"
+ #include "Definitions.h"
+ #include "Geometry.h"
++#include "Rendering.h"
+ 
+ struct Texture;
+ 
+@@ -16,7 +18,7 @@ enum Flip
  struct Sprite
  {
  	ecs::Entity texture;
@@ -351,6 +563,22 @@ index 20bb990..44707d2 100644
 +	I32 depth = 0;
  	geometry::Rect clip;
  	geometry::Vec2 pivot{ 0.5f, 0.5f };
+ };
+@@ -57,6 +59,13 @@ class SpriteRenderingModule
+ 	, public SignalProcessor<core::RenderSignal>
+ 	, public SignalProcessor<core::AssetUnloadingSignal<Texture>>
+ {
+-	void process_signal(core::RenderSignal& signal) override;
+-	void process_signal(core::AssetUnloadingSignal<Texture>& signal) override;
++public:
++    SpriteRenderingModule()
++    {
++        SignalProcessor<core::RenderSignal>::init_signals();
++        SignalProcessor<core::AssetUnloadingSignal<Texture>>::init_signals();
++    }
++
++    void process_signal(core::RenderSignal& signal) override;
++    void process_signal(core::AssetUnloadingSignal<Texture>& signal) override;
  };
 diff --git a/include/TimeRender.h b/include/TimeRender.h
 index 1c2d470..3cdc437 100644
@@ -385,7 +613,7 @@ index 8197f07..20739b1 100644
  	spritesheet = current;
  	current_frame = 0;
 diff --git a/src/Config.cpp b/src/Config.cpp
-index e8c0095..b4aed86 100644
+index e8c0095..0796274 100644
 --- a/src/Config.cpp
 +++ b/src/Config.cpp
 @@ -13,7 +13,7 @@ Config read_ini_file(RawString name)
@@ -406,7 +634,7 @@ index e8c0095..b4aed86 100644
  		}
  	}
  
-@@ -30,7 +30,7 @@ Config load_config_from_ini_file(RawString fileName)
+@@ -30,14 +30,14 @@ Config load_config_from_ini_file(RawString fileName)
  
  Config override_config_with_command_line(Config get_config, Size argumentCount, RawString arguments[])
  {
@@ -415,6 +643,14 @@ index e8c0095..b4aed86 100644
  	get_config["dagger"]["path"] = arguments[0];
  
  	for (int i = 1; i < argumentCount; i++)
+ 	{
+ 		Size delimiter = 0;
+ 		String flag{ arguments[i] };
+-		String token = flag;
++		String token;
+ 		String value = "";
+ 
+ 		if ((delimiter = flag.find("=")) != String::npos)
 @@ -64,7 +64,7 @@ Config override_config_with_command_line(Config get_config, Size argumentCount,
  			token.erase(0, delimiter + 1);
  		}
@@ -440,11 +676,14 @@ index 35753a2..07458ee 100644
  
  	auto& mouse_state = MutAccessUnique<MouseState>::access_unique();
 diff --git a/src/Loaders.cpp b/src/Loaders.cpp
-index db41123..0a9fcd7 100644
+index db41123..d9a1284 100644
 --- a/src/Loaders.cpp
 +++ b/src/Loaders.cpp
-@@ -23,18 +23,16 @@ TextureLoader::TextureLoader()
+@@ -21,20 +21,19 @@
+ TextureLoader::TextureLoader()
+ 	: core::AssetLoader<Texture>()
  {
++	SignalProcessor<core::WindowShutdownSignal>::init_signals();
  }
  
 -memory::RawPtr<Texture> TextureLoader::load_texture(String path)
@@ -469,7 +708,29 @@ index db41123..0a9fcd7 100644
  }
  
  String TextureLoader::get_default_asset_name() const
-@@ -101,7 +99,7 @@ void TextureLoader::load_assets()
+@@ -44,8 +43,6 @@ String TextureLoader::get_default_asset_name() const
+ 
+ ecs::Entity TextureLoader::load_asset(String texture_name, String texture_path)
+ {
+-	auto& registry = core::Engine::get_instance().registry;
+-
+ 	auto loaded = load_texture(texture_path);
+ 	Bool is_found = contains(texture_name);
+ 
+@@ -58,10 +55,8 @@ ecs::Entity TextureLoader::load_asset(String texture_name, String texture_path)
+ 		}
+ 
+ 		return ecs::no_entity;
+-	}
+-
+-	if (loaded != nullptr)
+-	{
++	} else {
++		auto& registry = core::Engine::get_instance().registry;
+ 		if (!is_found)
+ 		{
+ 			auto entity = registry.create();
+@@ -101,7 +96,7 @@ void TextureLoader::load_assets()
  		name_paths.insert({ name, path });
  	}
  
@@ -478,7 +739,7 @@ index db41123..0a9fcd7 100644
  	{
  		if (std::find(entries.begin(), entries.end(), loaded.first) == entries.end())
  		{
-@@ -112,7 +110,7 @@ void TextureLoader::load_assets()
+@@ -112,15 +107,15 @@ void TextureLoader::load_assets()
  		to_remove.push_back(loaded.first);
  	}
  
@@ -487,7 +748,18 @@ index db41123..0a9fcd7 100644
  	{
  		loaded_entity_mapping.erase(del);
  	}
-@@ -208,7 +206,7 @@ void read_line(std::ifstream& input)
+ 
+-	for (auto& [ name, path ] : name_paths)
++	for (auto& [ t_name, t_path ] : name_paths)
+ 	{
+-		auto texture_name = name;
+-		auto texture_path = "data/" + path;
++		auto texture_name = t_name;
++		auto texture_path = "data/" + t_path;
+ 
+ 		load_asset(texture_name, texture_path);
+ 	}
+@@ -208,7 +203,7 @@ void read_line(std::ifstream& input)
  	std::getline(input, line);
  }
  
@@ -496,7 +768,7 @@ index db41123..0a9fcd7 100644
  {
  	auto split = line.find(":");
  	auto first = trim_copy(line.substr(0, split));
-@@ -217,7 +215,7 @@ std::tuple<String, String> read_tuple(std::string line)
+@@ -217,7 +212,7 @@ std::tuple<String, String> read_tuple(std::string line)
  	return { first, second };
  }
  
@@ -505,7 +777,7 @@ index db41123..0a9fcd7 100644
  {
  	String line;
  
-@@ -234,35 +232,35 @@ std::optional<String> read_pair(std::ifstream& input, std::string key)
+@@ -234,35 +229,35 @@ std::optional<String> read_pair(std::ifstream& input, std::string key)
  	}
  }
  
@@ -546,7 +818,7 @@ index db41123..0a9fcd7 100644
  {
  	float a = 0.0f, b = 0.0f, c = 0.0f, d = 0.0f;
  	sscanf(str.c_str(), "%f, %f, %f, %f", &a, &b, &c, &d);
-@@ -286,7 +284,7 @@ void SpritesheetLoader::load_assets()
+@@ -286,7 +281,7 @@ void SpritesheetLoader::load_assets()
  	}
  	entry.close();
  
@@ -555,7 +827,7 @@ index db41123..0a9fcd7 100644
  	{
  		if (std::find(entries.begin(), entries.end(), loaded.first) == entries.end())
  		{
-@@ -297,7 +295,7 @@ void SpritesheetLoader::load_assets()
+@@ -297,7 +292,7 @@ void SpritesheetLoader::load_assets()
  		to_remove.push_back(loaded.first);
  	}
  
@@ -565,7 +837,7 @@ index db41123..0a9fcd7 100644
  		loaded_entity_mapping.erase(del);
  	}
 diff --git a/src/Main.cpp b/src/Main.cpp
-index 201ac93..6e5c295 100644
+index 201ac93..b78ed92 100644
 --- a/src/Main.cpp
 +++ b/src/Main.cpp
 @@ -4,13 +4,7 @@
@@ -583,8 +855,14 @@ index 201ac93..6e5c295 100644
  
  #include "Common.h"
  #include "FSM.h"
-@@ -43,28 +37,27 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
+@@ -37,34 +31,31 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
+ 		engine.use<ScoreRenderControlSystem>();
+ 	}
  
+-	int num;
+ 	void on_start() override
+ 	{
+-
  		spawn()
  			.with<Player>()
 -			.with<Health>(100)
@@ -603,7 +881,8 @@ index 201ac93..6e5c295 100644
  			.with<KeyBindings>(KeyCode::KEY_W, KeyCode::KEY_S, KeyCode::KEY_A, KeyCode::KEY_D, KeyCode::KEY_J)
  			.done();
  
- 		num = rand() % RANGE_X;
+-		num = rand() % RANGE_X;
++		int num = rand() % RANGE_X;
  		auto enemy2 = spawn()
  						  .with<Sprite>(ecs::no_entity)
 -						  .with<Health>(100)
@@ -620,7 +899,7 @@ index 201ac93..6e5c295 100644
  						  .done();
  
  		add_component<EnemyFSMController>(enemy2, enemy2);
-@@ -72,13 +65,13 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
+@@ -72,13 +63,13 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
  		num = rand() % RANGE_X;
  		auto enemy3 = spawn()
  						  .with<Sprite>(ecs::no_entity)
@@ -637,7 +916,7 @@ index 201ac93..6e5c295 100644
  						  .done();
  
  		add_component<EnemyFSMController>(enemy3, enemy3);
-@@ -86,13 +79,13 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
+@@ -86,13 +77,13 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
  		num = rand() % RANGE_Y;
  		auto enemy4 = spawn()
  						  .with<Sprite>(ecs::no_entity)
@@ -654,7 +933,7 @@ index 201ac93..6e5c295 100644
  						  .done();
  
  		add_component<EnemyFSMController>(enemy4, enemy4);
-@@ -100,51 +93,50 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
+@@ -100,51 +91,50 @@ struct Brawl : public Game, public SignalEmitter<GameStartSignal>, public MutAcc
  		num = rand() % RANGE_Y;
  		auto enemy5 = spawn()
  						  .with<Sprite>(ecs::no_entity)
@@ -728,7 +1007,7 @@ index 201ac93..6e5c295 100644
  			.done();
  		// spawn()
 diff --git a/src/ScoreRender.cpp b/src/ScoreRender.cpp
-index 187892e..802420b 100644
+index 187892e..c718eee 100644
 --- a/src/ScoreRender.cpp
 +++ b/src/ScoreRender.cpp
 @@ -2,8 +2,15 @@
@@ -748,11 +1027,28 @@ index 187892e..802420b 100644
  {
      font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
  
+@@ -39,7 +46,7 @@ void ScoreRenderControlSystem::on_tick()
+         auto player = MutAccessStorage<Player>::access_storage().front();
+         auto score = MutAccessComponentById<Score>::get(player).score;
+ 
+-        for (auto &&[entity, Score_render, position, sprite] : MutAccessGroupStorage<ScoreRender, Position, Sprite>::access_storage().each())
++        for (auto &&[_, Score_render, position, sprite] : MutAccessGroupStorage<ScoreRender, Position, Sprite>::access_storage().each())
+         {
+             sprite.depth = -7;
+             if (!Score_render.font)
 diff --git a/src/SpriteRendering.cpp b/src/SpriteRendering.cpp
-index 271981e..0c15e9a 100644
+index 271981e..6b80995 100644
 --- a/src/SpriteRendering.cpp
 +++ b/src/SpriteRendering.cpp
-@@ -9,7 +9,7 @@ using namespace core;
+@@ -1,7 +1,5 @@
+ #include "SpriteRendering.h"
+ 
+-#include "Assets.h"
+-#include "Rendering.h"
+ #include "Textures.h"
+ #include "Windowing.h"
+ 
+@@ -9,7 +7,7 @@ using namespace core;
  
  ecs::Entity Spritesheet::get_by_name(String name)
  {
@@ -761,7 +1057,7 @@ index 271981e..0c15e9a 100644
  }
  
  void SpriteRenderingModule::process_signal(RenderSignal& signal)
-@@ -28,10 +28,12 @@ void SpriteRenderingModule::process_signal(RenderSignal& signal)
+@@ -28,10 +26,12 @@ void SpriteRenderingModule::process_signal(RenderSignal& signal)
  
  	for (const auto&& [ entity, sprite ] : AccessGroupStorage<Sprite>::access_storage().each())
  	{
@@ -776,7 +1072,7 @@ index 271981e..0c15e9a 100644
  
  		const auto& pos = position_storage.contains(entity) ? position_storage.get<Position>(entity) : Position{ geometry::Vec2{ 0, 0 } };
  		const auto& scale = scale_storage.contains(entity) ? scale_storage.get<Scale>(entity) : Scale{ geometry::Vec2{ 1, 1 } };
-@@ -55,7 +57,8 @@ void SpriteRenderingModule::process_signal(AssetUnloadingSignal<Texture>& signal
+@@ -55,7 +55,8 @@ void SpriteRenderingModule::process_signal(AssetUnloadingSignal<Texture>& signal
  	for (const auto entity : current_sprites)
  	{
  		auto& sprite = current_sprites.get<Sprite>(entity);
@@ -787,7 +1083,7 @@ index 271981e..0c15e9a 100644
  	}
  }
 diff --git a/src/TimeRender.cpp b/src/TimeRender.cpp
-index 7b9c662..d4894fc 100644
+index 7b9c662..a1468ef 100644
 --- a/src/TimeRender.cpp
 +++ b/src/TimeRender.cpp
 @@ -3,8 +3,7 @@
@@ -817,9 +1113,12 @@ index 7b9c662..d4894fc 100644
  {
  	font = TTF_OpenFont("./data/fonts/Minecraft.ttf", font_size);
  
-@@ -47,7 +52,7 @@ void TimeRenderControlSystem::on_tick()
+@@ -45,9 +50,9 @@ void TimeRender::deinit()
+ void TimeRenderControlSystem::on_tick()
+ {
  
- 	for (auto &&[entity, time_render, position, sprite] : access_storage().each())
+-	for (auto &&[entity, time_render, position, sprite] : access_storage().each())
++	for (auto &&[_, time_render, position, sprite] : access_storage().each())
  	{
 -		sprite.depth = -7;
 +		sprite.depth = TEXT_SPRITE_DEPTH;
